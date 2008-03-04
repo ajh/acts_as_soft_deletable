@@ -31,11 +31,7 @@ module ActiveRecord #:nodoc:
           def create_table(create_table_options = {})
             connection.create_table(table_name, create_table_options) do |t|
               model_class.columns.select{|c| c.name != model_class.primary_key}.each do |col|
-                t.column col.name, col.type
-                  #:limit => col.limit, 
-                  #:default => col.default,
-                  #:scale => col.scale,
-                  #:precision => col.precision
+                t.column col.name, col.type, :scale => col.scale, :precision => col.precision
               end
               t.datetime :deleted_at
             end

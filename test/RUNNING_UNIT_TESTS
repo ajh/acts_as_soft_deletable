@@ -9,4 +9,5 @@ environment.rb must be loaded.
 
 == Running with Rake
 
-rake test
+rake test # runs mysql tests by default
+rake test DB=sqlite3 # runs sqlite3 tests, see test/config.yml for other database options

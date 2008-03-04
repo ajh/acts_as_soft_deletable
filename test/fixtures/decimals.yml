@@ -1,0 +1,4 @@
+one:
+  rational_number: <%= 2.0/3.0 %>
+  irrational_number: <%= Math::PI %>
+  short_real_number: <%= Math::PI %>

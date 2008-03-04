@@ -32,7 +32,7 @@ class SoftDeleteTestCase < Test::Unit::TestCase #:nodoc:
   end
    
   # found this in activesupport-2.0.2/lib/active_support/testing/default.rb
-  # Prevents this abstrace testcase from running
+  # Prevents this abstract testcase from running
   def run(*args)
     #method_name appears to be a symbol on 1.8.4 and a string on 1.8.6
     return if @method_name.to_s == "default_test"

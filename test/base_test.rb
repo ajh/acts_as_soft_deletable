@@ -21,6 +21,27 @@ class BaseTest < SoftDeleteTestCase
     assert deleted.frozen?
   end
 
+  def test_should_copy_decimals_correctly
+    assert_equal [1, 0], [Decimal.count, Decimal::Deleted.count]
+    decimal = Decimal.find :first
+
+    assert_difference("Decimal.count", -1) do
+      assert_difference("Decimal::Deleted.count") do
+        decimal.destroy
+      end
+    end
+
+    assert_difference("Decimal.count") do
+      assert_difference("Decimal::Deleted.count", -1) do
+        deleted = Decimal::Deleted.find :first
+        deleted.undestroy!
+      end
+    end
+
+    restored = Decimal.find :first
+    assert_models_equal decimal, restored
+  end
+
   private
 
     def assert_models_equal(a, b, message = "models weren't equal")
