@@ -19,15 +19,17 @@ module ActiveRecord #:nodoc:
             self.set_table_name "deleted_#{model_class.table_name}"
 
             extend Deleted::ClassMethods
+            include Deleted::InstanceMethods
           end
         end
       end
 
       module Deleted
+
         module ClassMethods
           def create_table(create_table_options = {})
             connection.create_table(table_name, create_table_options) do |t|
-              model_class.columns.select{|c| !excluded_columns.include?(c.name)}.each do |col|
+              model_class.columns.select{|c| c.name != model_class.primary_key}.each do |col|
                 t.column col.name, col.type
                   #:limit => col.limit, 
                   #:default => col.default,
@@ -37,10 +39,20 @@ module ActiveRecord #:nodoc:
               t.datetime :deleted_at
             end
           end
+        end
 
-          # returns a list of column names that will not be archived
-          def excluded_columns
-            [model_class.primary_key]  
+        module InstanceMethods
+          # restore the model from deleted status. Will destroy the deleted record and recreate the original record
+          def undestroy!
+            self.class.transaction do
+              model = self.class.model_class.new
+              self.attributes.reject{|k,v| k == 'deleted_at'}.keys.each do |key|
+                model.send("#{key}=", self.send(key))
+              end
+              model.save!
+              self.destroy
+            end
+            true
           end
         end
       end

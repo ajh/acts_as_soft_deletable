@@ -630,3 +630,257 @@
   [4;36;1mArtist Load (0.000276)[0m   [0;1mSELECT * FROM `artists` WHERE (`artists`.`name` = 'Chick Corea') LIMIT 1[0m
   [4;35;1mArtist::Deleted Load (0.000187)[0m   [0mSELECT * FROM `deleted_artists` WHERE (`deleted_artists`.`name` = 'Chick Corea') LIMIT 1[0m
   [4;36;1mSQL (0.000692)[0m   [0;1mROLLBACK[0m
+  [4;36;1mSQL (0.000139)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.533043)[0m   [0mDROP TABLE `artists`[0m
+  [4;36;1mSQL (0.005054)[0m   [0;1mCREATE TABLE `artists` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) DEFAULT NULL, `birthday` date DEFAULT NULL, `description` varchar(255) DEFAULT NULL, `created_at` datetime DEFAULT NULL, `updated_at` datetime DEFAULT NULL) ENGINE=InnoDB[0m
+  [4;35;1mArtist Columns (0.001349)[0m   [0mSHOW FIELDS FROM `artists`[0m
+  [4;36;1mSQL (0.001605)[0m   [0;1mDROP TABLE `deleted_artists`[0m
+  [4;35;1mSQL (0.004390)[0m   [0mCREATE TABLE `deleted_artists` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) DEFAULT NULL, `birthday` date DEFAULT NULL, `description` varchar(255) DEFAULT NULL, `created_at` datetime DEFAULT NULL, `updated_at` datetime DEFAULT NULL, `deleted_at` datetime DEFAULT NULL) ENGINE=InnoDB[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mMysql::Error: Table 'schema_info' already exists: CREATE TABLE `schema_info` (version int(11))[0m
+  [4;35;1mSQL (0.000834)[0m   [0mSHOW FIELDS FROM `schema_info`[0m
+  [4;36;1mSQL (0.000202)[0m   [0;1mUPDATE schema_info SET version = 1[0m
+  [4;35;1mSQL (0.000136)[0m   [0mBEGIN[0m
+  [4;36;1mArtist Load (0.000426)[0m   [0;1mSELECT * FROM `artists` WHERE (`artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;35;1mArtist::Deleted Columns (0.000961)[0m   [0mSHOW FIELDS FROM `deleted_artists`[0m
+  [4;36;1mArtist::Deleted Create (0.000247)[0m   [0;1mINSERT INTO `deleted_artists` (`name`, `updated_at`, `deleted_at`, `id`, `description`, `birthday`, `created_at`) VALUES('Chick Corea', '2008-03-03 16:45:55', NULL, 499177559, NULL, NULL, '2008-03-03 16:45:55')[0m
+  [4;35;1mArtist Destroy (0.000173)[0m   [0m DELETE FROM `artists`
+ WHERE `id` = 499177559
+[0m
+  [4;36;1mArtist Load (0.000194)[0m   [0;1mSELECT * FROM `artists` WHERE (`artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;35;1mArtist::Deleted Load (0.000194)[0m   [0mSELECT * FROM `deleted_artists` WHERE (`deleted_artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;36;1mSQL (0.000675)[0m   [0;1mROLLBACK[0m
+  [4;36;1mSQL (0.000141)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.040165)[0m   [0mDROP TABLE `artists`[0m
+  [4;36;1mSQL (0.015627)[0m   [0;1mCREATE TABLE `artists` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) DEFAULT NULL, `birthday` date DEFAULT NULL, `description` varchar(255) DEFAULT NULL, `created_at` datetime DEFAULT NULL, `updated_at` datetime DEFAULT NULL) ENGINE=InnoDB[0m
+  [4;35;1mArtist Columns (0.000901)[0m   [0mSHOW FIELDS FROM `artists`[0m
+  [4;36;1mSQL (0.001261)[0m   [0;1mDROP TABLE `deleted_artists`[0m
+  [4;35;1mSQL (0.004816)[0m   [0mCREATE TABLE `deleted_artists` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) DEFAULT NULL, `birthday` date DEFAULT NULL, `description` varchar(255) DEFAULT NULL, `created_at` datetime DEFAULT NULL, `updated_at` datetime DEFAULT NULL, `deleted_at` datetime DEFAULT NULL) ENGINE=InnoDB[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mMysql::Error: Table 'schema_info' already exists: CREATE TABLE `schema_info` (version int(11))[0m
+  [4;35;1mSQL (0.000549)[0m   [0mSHOW FIELDS FROM `schema_info`[0m
+  [4;36;1mSQL (0.000163)[0m   [0;1mUPDATE schema_info SET version = 1[0m
+  [4;35;1mSQL (0.000146)[0m   [0mBEGIN[0m
+  [4;36;1mArtist Load (0.000523)[0m   [0;1mSELECT * FROM `artists` WHERE (`artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;35;1mArtist::Deleted Columns (0.001287)[0m   [0mSHOW FIELDS FROM `deleted_artists`[0m
+  [4;36;1mArtist::Deleted Create (0.000349)[0m   [0;1mINSERT INTO `deleted_artists` (`name`, `updated_at`, `deleted_at`, `id`, `description`, `birthday`, `created_at`) VALUES('Chick Corea', '2008-03-03 16:47:01', NULL, 499177559, NULL, NULL, '2008-03-03 16:47:01')[0m
+  [4;35;1mArtist Destroy (0.000272)[0m   [0m DELETE FROM `artists`
+ WHERE `id` = 499177559
+[0m
+  [4;36;1mArtist Load (0.000373)[0m   [0;1mSELECT * FROM `artists` WHERE (`artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;35;1mArtist::Deleted Load (0.000280)[0m   [0mSELECT * FROM `deleted_artists` WHERE (`deleted_artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;36;1mSQL (0.000643)[0m   [0;1mROLLBACK[0m
+  [4;36;1mSQL (0.000139)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.038989)[0m   [0mDROP TABLE `artists`[0m
+  [4;36;1mSQL (0.004586)[0m   [0;1mCREATE TABLE `artists` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) DEFAULT NULL, `birthday` date DEFAULT NULL, `description` varchar(255) DEFAULT NULL, `created_at` datetime DEFAULT NULL, `updated_at` datetime DEFAULT NULL) ENGINE=InnoDB[0m
+  [4;35;1mArtist Columns (0.000891)[0m   [0mSHOW FIELDS FROM `artists`[0m
+  [4;36;1mSQL (0.001256)[0m   [0;1mDROP TABLE `deleted_artists`[0m
+  [4;35;1mSQL (0.004729)[0m   [0mCREATE TABLE `deleted_artists` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) DEFAULT NULL, `birthday` date DEFAULT NULL, `description` varchar(255) DEFAULT NULL, `created_at` datetime DEFAULT NULL, `updated_at` datetime DEFAULT NULL, `deleted_at` datetime DEFAULT NULL) ENGINE=InnoDB[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mMysql::Error: Table 'schema_info' already exists: CREATE TABLE `schema_info` (version int(11))[0m
+  [4;35;1mSQL (0.000560)[0m   [0mSHOW FIELDS FROM `schema_info`[0m
+  [4;36;1mSQL (0.000135)[0m   [0;1mUPDATE schema_info SET version = 1[0m
+  [4;35;1mSQL (0.000112)[0m   [0mBEGIN[0m
+  [4;36;1mArtist Load (0.000347)[0m   [0;1mSELECT * FROM `artists` WHERE (`artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;35;1mArtist::Deleted Columns (0.000923)[0m   [0mSHOW FIELDS FROM `deleted_artists`[0m
+  [4;36;1mArtist::Deleted Create (0.000289)[0m   [0;1mINSERT INTO `deleted_artists` (`name`, `updated_at`, `deleted_at`, `id`, `description`, `birthday`, `created_at`) VALUES('Chick Corea', '2008-03-03 16:47:15', NULL, 499177559, NULL, NULL, '2008-03-03 16:47:14')[0m
+  [4;35;1mArtist Destroy (0.000215)[0m   [0m DELETE FROM `artists`
+ WHERE `id` = 499177559
+[0m
+  [4;36;1mArtist Load (0.000227)[0m   [0;1mSELECT * FROM `artists` WHERE (`artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;35;1mArtist::Deleted Load (0.000221)[0m   [0mSELECT * FROM `deleted_artists` WHERE (`deleted_artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;36;1mSQL (0.003431)[0m   [0;1mROLLBACK[0m
+  [4;36;1mSQL (0.000128)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.048525)[0m   [0mDROP TABLE `artists`[0m
+  [4;36;1mSQL (0.004115)[0m   [0;1mCREATE TABLE `artists` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) DEFAULT NULL, `birthday` date DEFAULT NULL, `description` varchar(255) DEFAULT NULL, `created_at` datetime DEFAULT NULL, `updated_at` datetime DEFAULT NULL) ENGINE=InnoDB[0m
+  [4;35;1mArtist Columns (0.000830)[0m   [0mSHOW FIELDS FROM `artists`[0m
+  [4;36;1mSQL (0.001307)[0m   [0;1mDROP TABLE `deleted_artists`[0m
+  [4;35;1mSQL (0.004182)[0m   [0mCREATE TABLE `deleted_artists` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) DEFAULT NULL, `birthday` date DEFAULT NULL, `description` varchar(255) DEFAULT NULL, `created_at` datetime DEFAULT NULL, `updated_at` datetime DEFAULT NULL, `deleted_at` datetime DEFAULT NULL) ENGINE=InnoDB[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mMysql::Error: Table 'schema_info' already exists: CREATE TABLE `schema_info` (version int(11))[0m
+  [4;35;1mSQL (0.000582)[0m   [0mSHOW FIELDS FROM `schema_info`[0m
+  [4;36;1mSQL (0.000171)[0m   [0;1mUPDATE schema_info SET version = 1[0m
+  [4;35;1mSQL (0.000121)[0m   [0mBEGIN[0m
+  [4;36;1mArtist Load (0.000351)[0m   [0;1mSELECT * FROM `artists` WHERE (`artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;35;1mArtist::Deleted Columns (0.000932)[0m   [0mSHOW FIELDS FROM `deleted_artists`[0m
+  [4;36;1mArtist::Deleted Create (0.000284)[0m   [0;1mINSERT INTO `deleted_artists` (`name`, `updated_at`, `deleted_at`, `id`, `description`, `birthday`, `created_at`) VALUES('Chick Corea', '2008-03-03 16:47:30', NULL, 499177559, NULL, NULL, '2008-03-03 16:47:30')[0m
+  [4;35;1mArtist Destroy (0.000212)[0m   [0m DELETE FROM `artists`
+ WHERE `id` = 499177559
+[0m
+  [4;36;1mArtist Load (0.000235)[0m   [0;1mSELECT * FROM `artists` WHERE (`artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;35;1mArtist::Deleted Load (0.002348)[0m   [0mSELECT * FROM `deleted_artists` WHERE (`deleted_artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;36;1mSQL (0.004478)[0m   [0;1mROLLBACK[0m
+  [4;36;1mSQL (0.000132)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.048863)[0m   [0mDROP TABLE `artists`[0m
+  [4;36;1mSQL (0.004071)[0m   [0;1mCREATE TABLE `artists` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) DEFAULT NULL, `birthday` date DEFAULT NULL, `description` varchar(255) DEFAULT NULL, `created_at` datetime DEFAULT NULL, `updated_at` datetime DEFAULT NULL) ENGINE=InnoDB[0m
+  [4;35;1mArtist Columns (0.000839)[0m   [0mSHOW FIELDS FROM `artists`[0m
+  [4;36;1mSQL (0.001305)[0m   [0;1mDROP TABLE `deleted_artists`[0m
+  [4;35;1mSQL (0.005347)[0m   [0mCREATE TABLE `deleted_artists` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) DEFAULT NULL, `birthday` date DEFAULT NULL, `description` varchar(255) DEFAULT NULL, `created_at` datetime DEFAULT NULL, `updated_at` datetime DEFAULT NULL, `deleted_at` datetime DEFAULT NULL) ENGINE=InnoDB[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mMysql::Error: Table 'schema_info' already exists: CREATE TABLE `schema_info` (version int(11))[0m
+  [4;35;1mSQL (0.000498)[0m   [0mSHOW FIELDS FROM `schema_info`[0m
+  [4;36;1mSQL (0.000146)[0m   [0;1mUPDATE schema_info SET version = 1[0m
+  [4;35;1mSQL (0.000134)[0m   [0mBEGIN[0m
+  [4;36;1mArtist Load (0.000426)[0m   [0;1mSELECT * FROM `artists` WHERE (`artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;35;1mArtist::Deleted Columns (0.001180)[0m   [0mSHOW FIELDS FROM `deleted_artists`[0m
+  [4;36;1mArtist::Deleted Create (0.000336)[0m   [0;1mINSERT INTO `deleted_artists` (`name`, `updated_at`, `deleted_at`, `id`, `description`, `birthday`, `created_at`) VALUES('Chick Corea', '2008-03-03 16:47:37', NULL, 499177559, NULL, NULL, '2008-03-03 16:47:37')[0m
+  [4;35;1mArtist Destroy (0.000259)[0m   [0m DELETE FROM `artists`
+ WHERE `id` = 499177559
+[0m
+  [4;36;1mArtist Load (0.000282)[0m   [0;1mSELECT * FROM `artists` WHERE (`artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;35;1mArtist::Deleted Load (0.000275)[0m   [0mSELECT * FROM `deleted_artists` WHERE (`deleted_artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;36;1mSQL (0.000959)[0m   [0;1mROLLBACK[0m
+  [4;36;1mSQL (0.000134)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.028809)[0m   [0mDROP TABLE `artists`[0m
+  [4;36;1mSQL (0.004321)[0m   [0;1mCREATE TABLE `artists` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) DEFAULT NULL, `birthday` date DEFAULT NULL, `description` varchar(255) DEFAULT NULL, `created_at` datetime DEFAULT NULL, `updated_at` datetime DEFAULT NULL) ENGINE=InnoDB[0m
+  [4;35;1mArtist Columns (0.000894)[0m   [0mSHOW FIELDS FROM `artists`[0m
+  [4;36;1mSQL (0.001303)[0m   [0;1mDROP TABLE `deleted_artists`[0m
+  [4;35;1mSQL (0.004860)[0m   [0mCREATE TABLE `deleted_artists` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) DEFAULT NULL, `birthday` date DEFAULT NULL, `description` varchar(255) DEFAULT NULL, `created_at` datetime DEFAULT NULL, `updated_at` datetime DEFAULT NULL, `deleted_at` datetime DEFAULT NULL) ENGINE=InnoDB[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mMysql::Error: Table 'schema_info' already exists: CREATE TABLE `schema_info` (version int(11))[0m
+  [4;35;1mSQL (0.000491)[0m   [0mSHOW FIELDS FROM `schema_info`[0m
+  [4;36;1mSQL (0.000148)[0m   [0;1mUPDATE schema_info SET version = 1[0m
+  [4;35;1mSQL (0.000119)[0m   [0mBEGIN[0m
+  [4;36;1mArtist Load (0.000346)[0m   [0;1mSELECT * FROM `artists` WHERE (`artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;35;1mArtist::Deleted Columns (0.000903)[0m   [0mSHOW FIELDS FROM `deleted_artists`[0m
+  [4;36;1mArtist::Deleted Create (0.000280)[0m   [0;1mINSERT INTO `deleted_artists` (`name`, `updated_at`, `deleted_at`, `id`, `description`, `birthday`, `created_at`) VALUES('Chick Corea', '2008-03-03 16:47:40', NULL, 499177559, NULL, NULL, '2008-03-03 16:47:40')[0m
+  [4;35;1mArtist Destroy (0.000214)[0m   [0m DELETE FROM `artists`
+ WHERE `id` = 499177559
+[0m
+  [4;36;1mArtist Load (0.000332)[0m   [0;1mSELECT * FROM `artists` WHERE (`artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;35;1mArtist::Deleted Load (0.000225)[0m   [0mSELECT * FROM `deleted_artists` WHERE (`deleted_artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;36;1mSQL (0.001832)[0m   [0;1mROLLBACK[0m
+  [4;36;1mSQL (0.000130)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.043742)[0m   [0mDROP TABLE `artists`[0m
+  [4;36;1mSQL (0.004084)[0m   [0;1mCREATE TABLE `artists` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) DEFAULT NULL, `birthday` date DEFAULT NULL, `description` varchar(255) DEFAULT NULL, `created_at` datetime DEFAULT NULL, `updated_at` datetime DEFAULT NULL) ENGINE=InnoDB[0m
+  [4;35;1mArtist Columns (0.000901)[0m   [0mSHOW FIELDS FROM `artists`[0m
+  [4;36;1mSQL (0.001161)[0m   [0;1mDROP TABLE `deleted_artists`[0m
+  [4;35;1mSQL (0.003924)[0m   [0mCREATE TABLE `deleted_artists` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) DEFAULT NULL, `birthday` date DEFAULT NULL, `description` varchar(255) DEFAULT NULL, `created_at` datetime DEFAULT NULL, `updated_at` datetime DEFAULT NULL, `deleted_at` datetime DEFAULT NULL) ENGINE=InnoDB[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mMysql::Error: Table 'schema_info' already exists: CREATE TABLE `schema_info` (version int(11))[0m
+  [4;35;1mSQL (0.000523)[0m   [0mSHOW FIELDS FROM `schema_info`[0m
+  [4;36;1mSQL (0.000146)[0m   [0;1mUPDATE schema_info SET version = 1[0m
+  [4;35;1mSQL (0.000133)[0m   [0mBEGIN[0m
+  [4;36;1mArtist Load (0.000569)[0m   [0;1mSELECT * FROM `artists` WHERE (`artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;35;1mArtist::Deleted Columns (0.001180)[0m   [0mSHOW FIELDS FROM `deleted_artists`[0m
+  [4;36;1mArtist::Deleted Create (0.000347)[0m   [0;1mINSERT INTO `deleted_artists` (`name`, `updated_at`, `deleted_at`, `id`, `description`, `birthday`, `created_at`) VALUES('Chick Corea', '2008-03-03 16:47:42', NULL, 499177559, NULL, NULL, '2008-03-03 16:47:42')[0m
+  [4;35;1mArtist Destroy (0.000250)[0m   [0m DELETE FROM `artists`
+ WHERE `id` = 499177559
+[0m
+  [4;36;1mArtist Load (0.000281)[0m   [0;1mSELECT * FROM `artists` WHERE (`artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;35;1mArtist::Deleted Load (0.000269)[0m   [0mSELECT * FROM `deleted_artists` WHERE (`deleted_artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;36;1mSQL (0.004762)[0m   [0;1mROLLBACK[0m
+  [4;36;1mSQL (0.000139)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.035605)[0m   [0mDROP TABLE `artists`[0m
+  [4;36;1mSQL (0.003820)[0m   [0;1mCREATE TABLE `artists` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) DEFAULT NULL, `birthday` date DEFAULT NULL, `description` varchar(255) DEFAULT NULL, `created_at` datetime DEFAULT NULL, `updated_at` datetime DEFAULT NULL) ENGINE=InnoDB[0m
+  [4;35;1mArtist Columns (0.000897)[0m   [0mSHOW FIELDS FROM `artists`[0m
+  [4;36;1mSQL (0.001281)[0m   [0;1mDROP TABLE `deleted_artists`[0m
+  [4;35;1mSQL (0.004108)[0m   [0mCREATE TABLE `deleted_artists` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) DEFAULT NULL, `birthday` date DEFAULT NULL, `description` varchar(255) DEFAULT NULL, `created_at` datetime DEFAULT NULL, `updated_at` datetime DEFAULT NULL, `deleted_at` datetime DEFAULT NULL) ENGINE=InnoDB[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mMysql::Error: Table 'schema_info' already exists: CREATE TABLE `schema_info` (version int(11))[0m
+  [4;35;1mSQL (0.000508)[0m   [0mSHOW FIELDS FROM `schema_info`[0m
+  [4;36;1mSQL (0.000145)[0m   [0;1mUPDATE schema_info SET version = 1[0m
+  [4;35;1mSQL (0.000111)[0m   [0mBEGIN[0m
+  [4;36;1mArtist Load (0.000348)[0m   [0;1mSELECT * FROM `artists` WHERE (`artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;35;1mArtist::Deleted Columns (0.001013)[0m   [0mSHOW FIELDS FROM `deleted_artists`[0m
+  [4;36;1mArtist::Deleted Create (0.000281)[0m   [0;1mINSERT INTO `deleted_artists` (`name`, `updated_at`, `deleted_at`, `id`, `description`, `birthday`, `created_at`) VALUES('Chick Corea', '2008-03-03 16:47:44', NULL, 499177559, NULL, NULL, '2008-03-03 16:47:44')[0m
+  [4;35;1mArtist Destroy (0.000200)[0m   [0m DELETE FROM `artists`
+ WHERE `id` = 499177559
+[0m
+  [4;36;1mArtist Load (0.000229)[0m   [0;1mSELECT * FROM `artists` WHERE (`artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;35;1mArtist::Deleted Load (0.000257)[0m   [0mSELECT * FROM `deleted_artists` WHERE (`deleted_artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;36;1mSQL (0.000471)[0m   [0;1mROLLBACK[0m
+  [4;36;1mSQL (0.000129)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.059642)[0m   [0mDROP TABLE `artists`[0m
+  [4;36;1mSQL (0.004172)[0m   [0;1mCREATE TABLE `artists` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) DEFAULT NULL, `birthday` date DEFAULT NULL, `description` varchar(255) DEFAULT NULL, `created_at` datetime DEFAULT NULL, `updated_at` datetime DEFAULT NULL) ENGINE=InnoDB[0m
+  [4;35;1mArtist Columns (0.000903)[0m   [0mSHOW FIELDS FROM `artists`[0m
+  [4;36;1mSQL (0.001847)[0m   [0;1mDROP TABLE `deleted_artists`[0m
+  [4;35;1mSQL (0.003994)[0m   [0mCREATE TABLE `deleted_artists` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) DEFAULT NULL, `birthday` date DEFAULT NULL, `description` varchar(255) DEFAULT NULL, `created_at` datetime DEFAULT NULL, `updated_at` datetime DEFAULT NULL, `deleted_at` datetime DEFAULT NULL) ENGINE=InnoDB[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mMysql::Error: Table 'schema_info' already exists: CREATE TABLE `schema_info` (version int(11))[0m
+  [4;35;1mSQL (0.000487)[0m   [0mSHOW FIELDS FROM `schema_info`[0m
+  [4;36;1mSQL (0.000150)[0m   [0;1mUPDATE schema_info SET version = 1[0m
+  [4;35;1mSQL (0.000136)[0m   [0mBEGIN[0m
+  [4;36;1mArtist Load (0.000427)[0m   [0;1mSELECT * FROM `artists` WHERE (`artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;35;1mArtist::Deleted Columns (0.001283)[0m   [0mSHOW FIELDS FROM `deleted_artists`[0m
+  [4;36;1mArtist::Deleted Create (0.000344)[0m   [0;1mINSERT INTO `deleted_artists` (`name`, `updated_at`, `deleted_at`, `id`, `description`, `birthday`, `created_at`) VALUES('Chick Corea', '2008-03-03 16:49:01', NULL, 499177559, NULL, NULL, '2008-03-03 16:49:01')[0m
+  [4;35;1mArtist Destroy (0.000276)[0m   [0m DELETE FROM `artists`
+ WHERE `id` = 499177559
+[0m
+  [4;36;1mArtist Load (0.000323)[0m   [0;1mSELECT * FROM `artists` WHERE (`artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;35;1mArtist::Deleted Load (0.000308)[0m   [0mSELECT * FROM `deleted_artists` WHERE (`deleted_artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;36;1mSQL (0.001159)[0m   [0;1mROLLBACK[0m
+  [4;36;1mSQL (0.000130)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.040048)[0m   [0mDROP TABLE `artists`[0m
+  [4;36;1mSQL (0.004220)[0m   [0;1mCREATE TABLE `artists` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) DEFAULT NULL, `birthday` date DEFAULT NULL, `description` varchar(255) DEFAULT NULL, `created_at` datetime DEFAULT NULL, `updated_at` datetime DEFAULT NULL) ENGINE=InnoDB[0m
+  [4;35;1mArtist Columns (0.000895)[0m   [0mSHOW FIELDS FROM `artists`[0m
+  [4;36;1mSQL (0.001168)[0m   [0;1mDROP TABLE `deleted_artists`[0m
+  [4;35;1mSQL (0.003362)[0m   [0mCREATE TABLE `deleted_artists` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) DEFAULT NULL, `birthday` date DEFAULT NULL, `description` varchar(255) DEFAULT NULL, `created_at` datetime DEFAULT NULL, `updated_at` datetime DEFAULT NULL, `deleted_at` datetime DEFAULT NULL) ENGINE=InnoDB[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mMysql::Error: Table 'schema_info' already exists: CREATE TABLE `schema_info` (version int(11))[0m
+  [4;35;1mSQL (0.000495)[0m   [0mSHOW FIELDS FROM `schema_info`[0m
+  [4;36;1mSQL (0.000165)[0m   [0;1mUPDATE schema_info SET version = 1[0m
+  [4;35;1mSQL (0.000119)[0m   [0mBEGIN[0m
+  [4;36;1mArtist Load (0.000347)[0m   [0;1mSELECT * FROM `artists` WHERE (`artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;35;1mArtist::Deleted Columns (0.000911)[0m   [0mSHOW FIELDS FROM `deleted_artists`[0m
+  [4;36;1mArtist::Deleted Create (0.000285)[0m   [0;1mINSERT INTO `deleted_artists` (`name`, `updated_at`, `deleted_at`, `id`, `description`, `birthday`, `created_at`) VALUES('Chick Corea', '2008-03-03 16:49:18', NULL, 499177559, NULL, NULL, '2008-03-03 16:49:18')[0m
+  [4;35;1mArtist Destroy (0.000214)[0m   [0m DELETE FROM `artists`
+ WHERE `id` = 499177559
+[0m
+  [4;36;1mArtist Load (0.002554)[0m   [0;1mSELECT * FROM `artists` WHERE (`artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;35;1mArtist::Deleted Load (0.004361)[0m   [0mSELECT * FROM `deleted_artists` WHERE (`deleted_artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;36;1mSQL (0.000616)[0m   [0;1mROLLBACK[0m
+  [4;36;1mSQL (0.000135)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.006879)[0m   [0mDROP TABLE `artists`[0m
+  [4;36;1mSQL (0.004069)[0m   [0;1mCREATE TABLE `artists` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) DEFAULT NULL, `birthday` date DEFAULT NULL, `description` varchar(255) DEFAULT NULL, `created_at` datetime DEFAULT NULL, `updated_at` datetime DEFAULT NULL) ENGINE=InnoDB[0m
+  [4;35;1mArtist Columns (0.000919)[0m   [0mSHOW FIELDS FROM `artists`[0m
+  [4;36;1mSQL (0.001173)[0m   [0;1mDROP TABLE `deleted_artists`[0m
+  [4;35;1mSQL (0.003606)[0m   [0mCREATE TABLE `deleted_artists` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) DEFAULT NULL, `birthday` date DEFAULT NULL, `description` varchar(255) DEFAULT NULL, `created_at` datetime DEFAULT NULL, `updated_at` datetime DEFAULT NULL, `deleted_at` datetime DEFAULT NULL) ENGINE=InnoDB[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mMysql::Error: Table 'schema_info' already exists: CREATE TABLE `schema_info` (version int(11))[0m
+  [4;35;1mSQL (0.000571)[0m   [0mSHOW FIELDS FROM `schema_info`[0m
+  [4;36;1mSQL (0.000129)[0m   [0;1mUPDATE schema_info SET version = 1[0m
+  [4;35;1mSQL (0.000098)[0m   [0mBEGIN[0m
+  [4;36;1mArtist Load (0.000304)[0m   [0;1mSELECT * FROM `artists` WHERE (`artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;35;1mArtist::Deleted Columns (0.000847)[0m   [0mSHOW FIELDS FROM `deleted_artists`[0m
+  [4;36;1mArtist::Deleted Create (0.000245)[0m   [0;1mINSERT INTO `deleted_artists` (`name`, `updated_at`, `deleted_at`, `id`, `description`, `birthday`, `created_at`) VALUES('Chick Corea', '2008-03-03 16:49:47', NULL, 499177559, NULL, NULL, '2008-03-03 16:49:47')[0m
+  [4;35;1mArtist Destroy (0.000172)[0m   [0m DELETE FROM `artists`
+ WHERE `id` = 499177559
+[0m
+  [4;36;1mArtist Load (0.000193)[0m   [0;1mSELECT * FROM `artists` WHERE (`artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;35;1mArtist::Deleted Load (0.000177)[0m   [0mSELECT * FROM `deleted_artists` WHERE (`deleted_artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;36;1mArtist Load (0.000157)[0m   [0;1mSELECT * FROM `artists` WHERE (`artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;35;1mSQL (0.001153)[0m   [0mROLLBACK[0m
+  [4;36;1mSQL (0.000133)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.055812)[0m   [0mDROP TABLE `artists`[0m
+  [4;36;1mSQL (0.004322)[0m   [0;1mCREATE TABLE `artists` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) DEFAULT NULL, `birthday` date DEFAULT NULL, `description` varchar(255) DEFAULT NULL, `created_at` datetime DEFAULT NULL, `updated_at` datetime DEFAULT NULL) ENGINE=InnoDB[0m
+  [4;35;1mArtist Columns (0.001132)[0m   [0mSHOW FIELDS FROM `artists`[0m
+  [4;36;1mSQL (0.001990)[0m   [0;1mDROP TABLE `deleted_artists`[0m
+  [4;35;1mSQL (0.006393)[0m   [0mCREATE TABLE `deleted_artists` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) DEFAULT NULL, `birthday` date DEFAULT NULL, `description` varchar(255) DEFAULT NULL, `created_at` datetime DEFAULT NULL, `updated_at` datetime DEFAULT NULL, `deleted_at` datetime DEFAULT NULL) ENGINE=InnoDB[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mMysql::Error: Table 'schema_info' already exists: CREATE TABLE `schema_info` (version int(11))[0m
+  [4;35;1mSQL (0.000683)[0m   [0mSHOW FIELDS FROM `schema_info`[0m
+  [4;36;1mSQL (0.000156)[0m   [0;1mUPDATE schema_info SET version = 1[0m
+  [4;35;1mSQL (0.000115)[0m   [0mBEGIN[0m
+  [4;36;1mArtist Load (0.000361)[0m   [0;1mSELECT * FROM `artists` WHERE (`artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;35;1mArtist::Deleted Columns (0.001033)[0m   [0mSHOW FIELDS FROM `deleted_artists`[0m
+  [4;36;1mArtist::Deleted Create (0.000301)[0m   [0;1mINSERT INTO `deleted_artists` (`name`, `updated_at`, `deleted_at`, `id`, `description`, `birthday`, `created_at`) VALUES('Chick Corea', '2008-03-03 16:51:44', NULL, 499177559, NULL, NULL, '2008-03-03 16:51:44')[0m
+  [4;35;1mArtist Destroy (0.000223)[0m   [0m DELETE FROM `artists`
+ WHERE `id` = 499177559
+[0m
+  [4;36;1mArtist Load (0.000233)[0m   [0;1mSELECT * FROM `artists` WHERE (`artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;35;1mArtist::Deleted Load (0.000214)[0m   [0mSELECT * FROM `deleted_artists` WHERE (`deleted_artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;36;1mSQL (0.000513)[0m   [0;1mROLLBACK[0m
+  [4;36;1mSQL (0.000133)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+  [4;35;1mSQL (0.018573)[0m   [0mDROP TABLE `artists`[0m
+  [4;36;1mSQL (0.005684)[0m   [0;1mCREATE TABLE `artists` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) DEFAULT NULL, `birthday` date DEFAULT NULL, `description` varchar(255) DEFAULT NULL, `created_at` datetime DEFAULT NULL, `updated_at` datetime DEFAULT NULL) ENGINE=InnoDB[0m
+  [4;35;1mArtist Columns (0.000911)[0m   [0mSHOW FIELDS FROM `artists`[0m
+  [4;36;1mSQL (0.001729)[0m   [0;1mDROP TABLE `deleted_artists`[0m
+  [4;35;1mSQL (0.003180)[0m   [0mCREATE TABLE `deleted_artists` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `name` varchar(255) DEFAULT NULL, `birthday` date DEFAULT NULL, `description` varchar(255) DEFAULT NULL, `created_at` datetime DEFAULT NULL, `updated_at` datetime DEFAULT NULL, `deleted_at` datetime DEFAULT NULL) ENGINE=InnoDB[0m
+  [4;36;1mSQL (0.000000)[0m   [0;1mMysql::Error: Table 'schema_info' already exists: CREATE TABLE `schema_info` (version int(11))[0m
+  [4;35;1mSQL (0.000591)[0m   [0mSHOW FIELDS FROM `schema_info`[0m
+  [4;36;1mSQL (0.000142)[0m   [0;1mUPDATE schema_info SET version = 1[0m
+  [4;35;1mSQL (0.000096)[0m   [0mBEGIN[0m
+  [4;36;1mArtist Load (0.000328)[0m   [0;1mSELECT * FROM `artists` WHERE (`artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;35;1mArtist::Deleted Columns (0.000776)[0m   [0mSHOW FIELDS FROM `deleted_artists`[0m
+  [4;36;1mArtist::Deleted Create (0.000263)[0m   [0;1mINSERT INTO `deleted_artists` (`name`, `updated_at`, `deleted_at`, `id`, `description`, `birthday`, `created_at`) VALUES('Chick Corea', '2008-03-03 16:52:12', NULL, 499177559, NULL, NULL, '2008-03-03 16:52:12')[0m
+  [4;35;1mArtist Destroy (0.000193)[0m   [0m DELETE FROM `artists`
+ WHERE `id` = 499177559
+[0m
+  [4;36;1mArtist Load (0.000198)[0m   [0;1mSELECT * FROM `artists` WHERE (`artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;35;1mArtist::Deleted Load (0.000181)[0m   [0mSELECT * FROM `deleted_artists` WHERE (`deleted_artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;36;1mArtist Create (0.000191)[0m   [0;1mINSERT INTO `artists` (`name`, `updated_at`, `id`, `description`, `birthday`, `created_at`) VALUES('Chick Corea', '2008-03-03 16:52:12', 499177559, NULL, NULL, '2008-03-03 16:52:12')[0m
+  [4;35;1mArtist::Deleted Destroy (0.000156)[0m   [0m DELETE FROM `deleted_artists`
+ WHERE `id` = 499177559
+[0m
+  [4;36;1mArtist Load (0.000201)[0m   [0;1mSELECT * FROM `artists` WHERE (`artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;35;1mArtist::Deleted Load (0.003908)[0m   [0mSELECT * FROM `deleted_artists` WHERE (`deleted_artists`.`name` = 'Chick Corea') LIMIT 1[0m
+  [4;36;1mSQL (0.000524)[0m   [0;1mROLLBACK[0m

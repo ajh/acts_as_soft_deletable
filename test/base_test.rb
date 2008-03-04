@@ -8,5 +8,9 @@ class BaseTest < Test::Unit::TestCase
 
     deleted = Artist::Deleted.find_by_name('Chick Corea')
     assert_equal artist.attributes, deleted.attributes.reject{|k,v| k == 'deleted_at'}
+
+    assert deleted.undestroy!
+    assert_equal artist.attributes, Artist.find_by_name('Chick Corea').attributes
+    assert_nil Artist::Deleted.find_by_name('Chick Corea')
   end
 end
