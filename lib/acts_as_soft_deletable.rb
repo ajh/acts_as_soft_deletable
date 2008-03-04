@@ -6,7 +6,8 @@ module ActiveRecord #:nodoc:
       module ClassMethods
         def acts_as_soft_deletable
           # don't allow multiple calls
-          #return if self.included_modules.include?(ActiveRecord::Acts::Versioned::ActMethods)
+          return if self.included_modules.include?(Model::InstanceMethods)
+
           include Model::InstanceMethods
           extend Model::ClassMethods
           
