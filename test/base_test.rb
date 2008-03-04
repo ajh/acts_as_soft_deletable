@@ -1,6 +1,6 @@
 require File.join(File.dirname(__FILE__), 'test_helper')
 
-class BaseTest < Test::Unit::TestCase
+class BaseTest < SoftDeleteTestCase
   def test_destroy_should_create_a_deleted_model
     artist = Artist.find_by_name('Chick Corea')
     artist.destroy

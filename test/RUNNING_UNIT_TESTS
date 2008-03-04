@@ -1,0 +1,12 @@
+== Creating the test database
+
+see test/config.yml
+
+== Other Prerequisites
+
+Mocha must be installed.
+environment.rb must be loaded.
+
+== Running with Rake
+
+rake test
