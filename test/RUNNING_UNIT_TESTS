@@ -9,5 +9,7 @@ Mocha must be installed.
 
 == Running with Rake
 
-rake test # runs mysql tests by default
-rake test DB=sqlite3 # runs sqlite3 tests, see test/config.yml for other database options
+rake test       # runs tests against all databases
+rake test:mysql # just runs mysql tests
+
+rake -T   # See this for more info
