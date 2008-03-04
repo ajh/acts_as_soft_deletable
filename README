@@ -1,0 +1,67 @@
+=== acts_as_soft_deletable ===
+
+This plugin provides the ability to soft delete ActiveRecord models. When 
+models are destroyed, they will be archived into a special deleted table. 
+They can later be restored easily.
+
+<pre>
+
+class Artist < ActiveRecord::Base
+  # This will wrap the destroy method to provide soft delete 
+  # support and create a new ActiveRecord class called Artist::Deleted
+  acts_as_soft_deletable
+end
+
+model = Artist.find(34)
+model.destroy   # removes row from artists table, and adds a row to 
+                # deleted_artists table
+
+deleted = Artist::Deleted.find(34)
+deleted.undestroy!  # adds the row back to the artists table, and removes 
+                    # if from the deleted_artists table
+
+restored = Artist.find(34) # The artist is restored with all the same 
+                           # information. The updated_at column will be 
+                           # Time.now if it exists.
+
+</pre>
+
+== Setup ==
+
+Any ActiveRecord class that wants the soft delete functionality should add
+the following line to their class definition:
+
+<pre>
+class SomeModel < ActiveRecord::Base
+  acts_as_soft_deletable
+  ...
+</pre>
+
+and setup the deleted table with the following migration:
+
+<pre>
+class AddActsAsSoftDeletable < ActiveRecord::Migration
+  def self.up
+    SomeModel::Deleted.create_table
+  end
+
+  def self.down
+    SomeModel::Deleted.drop_table
+  end
+end
+</pre>
+
+== Compare to acts_as_paranoid ==
+
+It may seem a little untidy to have a deleted table for each table with soft delete support. 
+
+Acts_as_paranoid takes a different approach and uses a deleted_at flag in the models
+table. This approach has the drawback that the behavior of find on the model has to change to 
+exclude deleted rows by default. This turns out be be a challenge as it needs to monkey patch 
+the ActiveRecord internals which can break as ActiveRecord evolves. Also, there are some exotic 
+finds that need to be considered, like "has_many through with polymorphism". This doesn't work in 
+acts_as_paranoid for example (March 2008).
+
+This plugin avoids the problem of changing find's behavior by allowing the row to really be 
+deleted and archiving it into another table. The cost is that there are a bunch of deleted_* 
+tables in the database.
