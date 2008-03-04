@@ -1,0 +1,168 @@
+# Logfile created on Tue Mar 04 11:17:23 -0800 2008 by /
+  [4;36;1mSQL (0.000314)[0m   [0;1mSHOW client_min_messages[0m
+  [4;35;1mSQL (0.000101)[0m   [0mSET client_min_messages TO 'panic'[0m
+  [4;36;1mSQL (0.000086)[0m   [0;1mSHOW standard_conforming_strings[0m
+  [4;35;1mSQL (0.000073)[0m   [0mSET client_min_messages TO 'notice'[0m
+  [4;36;1mSQL (0.000071)[0m   [0;1mSET client_min_messages TO 'ERROR'[0m
+  [4;35;1mSQL (0.052235)[0m   [0mDROP TABLE artists[0m
+  [4;36;1mSQL (0.015047)[0m   [0;1mCREATE TABLE artists ("id" serial primary key, "name" character varying(255) DEFAULT NULL, "birthday" date DEFAULT NULL, "description" character varying(255) DEFAULT NULL, "created_at" timestamp DEFAULT NULL, "updated_at" timestamp DEFAULT NULL) [0m
+  [4;35;1mSQL (0.003802)[0m   [0m SELECT a.attname, format_type(a.atttypid, a.atttypmod), d.adsrc, a.attnotnull
+ FROM pg_attribute a LEFT JOIN pg_attrdef d
+ ON a.attrelid = d.adrelid AND a.attnum = d.adnum
+ WHERE a.attrelid = 'artists'::regclass
+ AND a.attnum > 0 AND NOT a.attisdropped
+ ORDER BY a.attnum
+[0m
+  [4;36;1mSQL (0.004227)[0m   [0;1mDROP TABLE deleted_artists[0m
+  [4;35;1mSQL (0.015334)[0m   [0mCREATE TABLE deleted_artists ("id" serial primary key, "name" character varying(255) DEFAULT NULL, "birthday" date DEFAULT NULL, "description" character varying(255) DEFAULT NULL, "created_at" timestamp DEFAULT NULL, "updated_at" timestamp DEFAULT NULL, "deleted_at" timestamp DEFAULT NULL) [0m
+  [4;36;1mSQL (0.003840)[0m   [0;1mDROP TABLE decimals[0m
+  [4;35;1mSQL (0.008776)[0m   [0mCREATE TABLE decimals ("id" serial primary key, "rational_number" decimal(8,4) DEFAULT NULL, "irrational_number" decimal(10,8) DEFAULT NULL, "short_real_number" decimal(5,2) DEFAULT NULL, "created_at" timestamp DEFAULT NULL, "updated_at" timestamp DEFAULT NULL) [0m
+  [4;36;1mSQL (0.002279)[0m   [0;1m SELECT a.attname, format_type(a.atttypid, a.atttypmod), d.adsrc, a.attnotnull
+ FROM pg_attribute a LEFT JOIN pg_attrdef d
+ ON a.attrelid = d.adrelid AND a.attnum = d.adnum
+ WHERE a.attrelid = 'decimals'::regclass
+ AND a.attnum > 0 AND NOT a.attisdropped
+ ORDER BY a.attnum
+[0m
+  [4;35;1mSQL (0.005326)[0m   [0mDROP TABLE deleted_decimals[0m
+  [4;36;1mSQL (0.017411)[0m   [0;1mCREATE TABLE deleted_decimals ("id" serial primary key, "rational_number" decimal(8,4) DEFAULT NULL, "irrational_number" decimal(10,8) DEFAULT NULL, "short_real_number" decimal(5,2) DEFAULT NULL, "created_at" timestamp DEFAULT NULL, "updated_at" timestamp DEFAULT NULL, "deleted_at" timestamp DEFAULT NULL) [0m
+  [4;35;1mSQL (0.000000)[0m   [0mPGError: ERROR: relation "schema_info" already exists
+: CREATE TABLE schema_info (version integer)[0m
+  [4;36;1mSQL (0.001249)[0m   [0;1m SELECT a.attname, format_type(a.atttypid, a.atttypmod), d.adsrc, a.attnotnull
+ FROM pg_attribute a LEFT JOIN pg_attrdef d
+ ON a.attrelid = d.adrelid AND a.attnum = d.adnum
+ WHERE a.attrelid = 'schema_info'::regclass
+ AND a.attnum > 0 AND NOT a.attisdropped
+ ORDER BY a.attnum
+[0m
+  [4;35;1mSQL (0.000804)[0m   [0mUPDATE schema_info SET version = 1[0m
+  [4;36;1mSQL (0.000741)[0m   [0;1m SELECT a.attname, format_type(a.atttypid, a.atttypmod), d.adsrc, a.attnotnull
+ FROM pg_attribute a LEFT JOIN pg_attrdef d
+ ON a.attrelid = d.adrelid AND a.attnum = d.adnum
+ WHERE a.attrelid = 'deleted_artists'::regclass
+ AND a.attnum > 0 AND NOT a.attisdropped
+ ORDER BY a.attnum
+[0m
+  [4;35;1mArtist::Deleted Load (0.001546)[0m   [0mSELECT * FROM deleted_artists WHERE (deleted_artists."name" = E'Robert Walter') LIMIT 1[0m
+  [4;36;1mArtist Load (0.000342)[0m   [0;1mSELECT * FROM artists WHERE (artists."name" = E'Robert Walter') LIMIT 1[0m
+  [4;35;1mSQL (0.000082)[0m   [0mBEGIN[0m
+  [4;36;1mPK and serial sequence (0.003704)[0m   [0;1m SELECT attr.attname, seq.relname
+ FROM pg_class seq,
+ pg_attribute attr,
+ pg_depend dep,
+ pg_namespace name,
+ pg_constraint cons
+ WHERE seq.oid = dep.objid
+ AND seq.relkind = 'S'
+ AND attr.attrelid = dep.refobjid
+ AND attr.attnum = dep.refobjsubid
+ AND attr.attrelid = cons.conrelid
+ AND attr.attnum = cons.conkey[1]
+ AND cons.contype = 'p'
+ AND dep.refobjid = 'artists'::regclass
+[0m
+  [4;35;1mArtist Create (0.000331)[0m   [0mINSERT INTO artists ("name", "updated_at", "id", "description", "birthday", "created_at") VALUES(E'Robert Walter', '2008-03-04 11:17:33.820289', 1, E'Robert Walter is the definitive soul-jazz organist of his generation.', '1970-01-01', '2008-01-04 00:00:00.000000')[0m
+  [4;36;1mArtist::Deleted Destroy (0.000282)[0m   [0;1m DELETE FROM deleted_artists
+ WHERE "id" = 1
+[0m
+  [4;35;1mSQL (0.000715)[0m   [0mCOMMIT[0m
+  [4;36;1mArtist Load (0.000283)[0m   [0;1mSELECT * FROM artists WHERE (artists."name" = E'Robert Walter') LIMIT 1[0m
+  [4;35;1mArtist::Deleted Load (0.000258)[0m   [0mSELECT * FROM deleted_artists WHERE (deleted_artists."name" = E'Robert Walter') LIMIT 1[0m
+  [4;36;1mArtist Load (0.000276)[0m   [0;1mSELECT * FROM artists WHERE (artists."name" = E'Chick Corea') LIMIT 1[0m
+  [4;35;1mSQL (0.000080)[0m   [0mBEGIN[0m
+  [4;36;1mPK and serial sequence (0.003675)[0m   [0;1m SELECT attr.attname, seq.relname
+ FROM pg_class seq,
+ pg_attribute attr,
+ pg_depend dep,
+ pg_namespace name,
+ pg_constraint cons
+ WHERE seq.oid = dep.objid
+ AND seq.relkind = 'S'
+ AND attr.attrelid = dep.refobjid
+ AND attr.attnum = dep.refobjsubid
+ AND attr.attrelid = cons.conrelid
+ AND attr.attnum = cons.conkey[1]
+ AND cons.contype = 'p'
+ AND dep.refobjid = 'deleted_artists'::regclass
+[0m
+  [4;35;1mArtist::Deleted Create (0.000267)[0m   [0mINSERT INTO deleted_artists ("name", "updated_at", "deleted_at", "id", "description", "birthday", "created_at") VALUES(E'Chick Corea', '2008-03-04 11:17:33.861861', NULL, 499177559, E'He is known for his work during the 1970s in the genre of jazz fusion.', '1941-06-12', '2008-03-04 00:00:00.000000')[0m
+  [4;36;1mArtist Destroy (0.000211)[0m   [0;1m DELETE FROM artists
+ WHERE "id" = 499177559
+[0m
+  [4;35;1mSQL (0.000552)[0m   [0mCOMMIT[0m
+  [4;36;1mArtist Load (0.000247)[0m   [0;1mSELECT * FROM artists WHERE (artists."name" = E'Chick Corea') LIMIT 1[0m
+  [4;35;1mArtist::Deleted Load (0.000247)[0m   [0mSELECT * FROM deleted_artists WHERE (deleted_artists."name" = E'Chick Corea') LIMIT 1[0m
+  [4;36;1mSQL (0.000134)[0m   [0;1mSHOW max_identifier_length[0m
+  [4;35;1mSQL (0.000288)[0m   [0mSELECT count(*) AS count_all FROM decimals [0m
+  [4;36;1mSQL (0.000796)[0m   [0;1m SELECT a.attname, format_type(a.atttypid, a.atttypmod), d.adsrc, a.attnotnull
+ FROM pg_attribute a LEFT JOIN pg_attrdef d
+ ON a.attrelid = d.adrelid AND a.attnum = d.adnum
+ WHERE a.attrelid = 'deleted_decimals'::regclass
+ AND a.attnum > 0 AND NOT a.attisdropped
+ ORDER BY a.attnum
+[0m
+  [4;35;1mSQL (0.000469)[0m   [0mSELECT count(*) AS count_all FROM deleted_decimals [0m
+  [4;36;1mDecimal Load (0.000235)[0m   [0;1mSELECT * FROM decimals LIMIT 1[0m
+  [4;35;1mSQL (0.000184)[0m   [0mSELECT count(*) AS count_all FROM decimals [0m
+  [4;36;1mSQL (0.000180)[0m   [0;1mSELECT count(*) AS count_all FROM deleted_decimals [0m
+  [4;35;1mSQL (0.000080)[0m   [0mBEGIN[0m
+  [4;36;1mPK and serial sequence (0.003707)[0m   [0;1m SELECT attr.attname, seq.relname
+ FROM pg_class seq,
+ pg_attribute attr,
+ pg_depend dep,
+ pg_namespace name,
+ pg_constraint cons
+ WHERE seq.oid = dep.objid
+ AND seq.relkind = 'S'
+ AND attr.attrelid = dep.refobjid
+ AND attr.attnum = dep.refobjsubid
+ AND attr.attrelid = cons.conrelid
+ AND attr.attnum = cons.conkey[1]
+ AND cons.contype = 'p'
+ AND dep.refobjid = 'deleted_decimals'::regclass
+[0m
+  [4;35;1mDecimal::Deleted Create (0.000532)[0m   [0mINSERT INTO deleted_decimals ("updated_at", "deleted_at", "id", "irrational_number", "short_real_number", "rational_number", "created_at") VALUES('2008-03-04 11:17:33.908200', NULL, 953125641, 3.14159265, 3.14, 0.6667, '2008-03-04 11:17:33.000000')[0m
+  [4;36;1mDecimal Destroy (0.000230)[0m   [0;1m DELETE FROM decimals
+ WHERE "id" = 953125641
+[0m
+  [4;35;1mSQL (0.000598)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.000297)[0m   [0;1mSELECT count(*) AS count_all FROM deleted_decimals [0m
+  [4;35;1mSQL (0.000193)[0m   [0mSELECT count(*) AS count_all FROM decimals [0m
+  [4;36;1mSQL (0.000205)[0m   [0;1mSELECT count(*) AS count_all FROM decimals [0m
+  [4;35;1mSQL (0.000211)[0m   [0mSELECT count(*) AS count_all FROM deleted_decimals [0m
+  [4;36;1mDecimal::Deleted Load (0.000271)[0m   [0;1mSELECT * FROM deleted_decimals LIMIT 1[0m
+  [4;35;1mSQL (0.000092)[0m   [0mBEGIN[0m
+  [4;36;1mPK and serial sequence (0.004410)[0m   [0;1m SELECT attr.attname, seq.relname
+ FROM pg_class seq,
+ pg_attribute attr,
+ pg_depend dep,
+ pg_namespace name,
+ pg_constraint cons
+ WHERE seq.oid = dep.objid
+ AND seq.relkind = 'S'
+ AND attr.attrelid = dep.refobjid
+ AND attr.attnum = dep.refobjsubid
+ AND attr.attrelid = cons.conrelid
+ AND attr.attnum = cons.conkey[1]
+ AND cons.contype = 'p'
+ AND dep.refobjid = 'decimals'::regclass
+[0m
+  [4;35;1mDecimal Create (0.000297)[0m   [0mINSERT INTO decimals ("updated_at", "id", "irrational_number", "short_real_number", "rational_number", "created_at") VALUES('2008-03-04 11:17:33.920208', 953125641, 3.14159265, 3.14, 0.6667, '2008-03-04 11:17:33.000000')[0m
+  [4;36;1mDecimal::Deleted Destroy (0.000289)[0m   [0;1m DELETE FROM deleted_decimals
+ WHERE "id" = 953125641
+[0m
+  [4;35;1mSQL (0.001278)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.000281)[0m   [0;1mSELECT count(*) AS count_all FROM deleted_decimals [0m
+  [4;35;1mSQL (0.000251)[0m   [0mSELECT count(*) AS count_all FROM decimals [0m
+  [4;36;1mDecimal Load (0.000265)[0m   [0;1mSELECT * FROM decimals LIMIT 1[0m
+  [4;35;1mArtist Load (0.000313)[0m   [0mSELECT * FROM artists WHERE (artists."name" = E'Chick Corea') LIMIT 1[0m
+  [4;36;1mSQL (0.000084)[0m   [0;1mBEGIN[0m
+  [4;35;1mArtist::Deleted Create (0.000322)[0m   [0mINSERT INTO deleted_artists ("name", "updated_at", "deleted_at", "id", "description", "birthday", "created_at") VALUES(E'Chick Corea', '2008-03-04 11:17:33.969367', NULL, 499177559, E'He is known for his work during the 1970s in the genre of jazz fusion.', '1941-06-12', '2008-03-04 00:00:00.000000')[0m
+  [4;36;1mSQL (0.000093)[0m   [0;1mROLLBACK[0m
+  [4;35;1mArtist::Deleted Load (0.000331)[0m   [0mSELECT * FROM deleted_artists WHERE (deleted_artists."name" = E'Chick Corea') LIMIT 1[0m
+  [4;36;1mArtist Load (0.000289)[0m   [0;1mSELECT * FROM artists WHERE (artists."name" = E'Chick Corea') LIMIT 1[0m
+  [4;35;1mArtist Load (0.000335)[0m   [0mSELECT * FROM artists WHERE (artists."name" = E'Chick Corea') LIMIT 1[0m
+  [4;36;1mSQL (0.000103)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.000103)[0m   [0mROLLBACK[0m
+  [4;36;1mArtist::Deleted Load (0.000339)[0m   [0;1mSELECT * FROM deleted_artists WHERE (deleted_artists."name" = E'Chick Corea') LIMIT 1[0m
+  [4;35;1mArtist Load (0.000298)[0m   [0mSELECT * FROM artists WHERE (artists."name" = E'Chick Corea') LIMIT 1[0m

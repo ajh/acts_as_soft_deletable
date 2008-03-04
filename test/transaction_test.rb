@@ -5,7 +5,6 @@ class TransactionTest < SoftDeleteTestCase
     artist = Artist.find_by_name('Chick Corea')
     artist.expects(:destroy_without_soft_delete).raises("some error")
 
-    #artist.destroy
     assert_raises(RuntimeError) { artist.destroy }
 
     assert_nil Artist::Deleted.find_by_name('Chick Corea')

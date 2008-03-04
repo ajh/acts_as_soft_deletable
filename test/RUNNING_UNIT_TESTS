@@ -1,11 +1,11 @@
-== Creating the test database
+== Creating the test database(s)
 
-see test/config.yml
+The tests can run against several databases. See the related test/connections/#{adapter}/connection.rb file
+for information about expected connection settings.
 
 == Other Prerequisites
 
 Mocha must be installed.
-environment.rb must be loaded.
 
 == Running with Rake
 

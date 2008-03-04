@@ -1,16 +1,27 @@
 $:.unshift(File.dirname(__FILE__) + '/../lib')
-require 'test/unit'
-# pull in a rails projects environment.rb
-require '/home/ajh/devel/substantial/gorillakiller/config/environment.rb'
 require 'rubygems'
-require 'active_record/fixtures'
+
+require 'test/unit'
 require 'mocha'
+
+#require '/home/ajh/devel/substantial/gorillakiller/config/environment.rb'
+require 'active_support'
+require 'active_record'
+require 'active_record/fixtures'
+
+
+#require 'test/unit'
+## pull in a rails projects environment.rb
+#require '/home/ajh/devel/substantial/gorillakiller/config/environment.rb'
+#require 'rubygems'
+#require 'active_record/fixtures'
+#require 'mocha'
 
 require 'acts_as_soft_deletable'
 
-config = YAML::load(IO.read(File.dirname(__FILE__) + '/config.yml'))
+# pulls from one of test/connections/#{adapter}/connection.rb depending on how rake setup our lib paths
+require 'connection' 
 ActiveRecord::Base.logger = Logger.new File.dirname(__FILE__) + "/debug.log"
-ActiveRecord::Base.establish_connection config[ENV['DB'] || 'mysql']
 
 require File.join(File.dirname(__FILE__),"fixtures", "models.rb")
 load File.join(File.dirname(__FILE__),"fixtures", "schema.rb")
@@ -24,6 +35,8 @@ class SoftDeleteTestCase < Test::Unit::TestCase #:nodoc:
   self.use_instantiated_fixtures  = false
 
   def setup
+    # Some hackery to get fixtures to be refreshed before each test without transactions
+    Fixtures.cache_for_connection(ActiveRecord::Base.connection).clear
     Fixtures.create_fixtures( \
       File.join(File.dirname(__FILE__), "fixtures"),
       Dir.glob('test/fixtures/*.yml').collect{|y| File.basename(y).match(%r/(.*)\.yml/)[1]}
