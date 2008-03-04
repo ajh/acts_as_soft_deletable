@@ -1,0 +1,7 @@
+rw:
+  name: Robert Walter
+  description: Robert Walter is the definitive soul-jazz organist of his generation.
+  birthday: 1970-1-1 
+  deleted_at: <%= (Date.today - 3) %>
+  updated_at: <%= (Date.today - 30) %>
+  created_at: <%= (Date.today - 60) %>
