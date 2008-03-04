@@ -40,6 +40,11 @@ module ActiveRecord #:nodoc:
               t.datetime :deleted_at
             end
           end
+
+          # TODO: not tested yet
+          def drop_table(drop_table_options = {})
+            connection.drop_table(table_name, drop_table_options)
+          end
         end
 
         module InstanceMethods
