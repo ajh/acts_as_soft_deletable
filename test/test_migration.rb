@@ -11,8 +11,6 @@ if ActiveRecord::Base.connection.supports_migrations?
       assert_raises(ActiveRecord::StatementInvalid) { Thing.create :title => 'blah blah' }
 
       migrate_up(3)
-      Thing.reset_column_information
-      Thing::Deleted.reset_column_information
 
       assert_soft_delete_works
 
@@ -26,9 +24,9 @@ if ActiveRecord::Base.connection.supports_migrations?
       assert_raises(ActiveRecord::StatementInvalid) { Thing.create :title => 'blah blah' }
 
       migrate_up(4)
-      Thing.reset_column_information
-      Thing::Deleted.reset_column_information
 
+      #t = Thing.create! :title => 'blah blah', :price => 123.45, :type => 'Thing'
+      #new_assert_soft_delete_works(t)
       assert_soft_delete_works
 
       migrate_down
@@ -59,6 +57,23 @@ if ActiveRecord::Base.connection.supports_migrations?
 
       def migrate_down(version=nil)
         ActiveRecord::Migrator.down(File.dirname(__FILE__) + '/fixtures/migrations/', version)
+      end
+
+      # takes a saved model and runs assertions testing whether soft deleting is working
+      def new_assert_soft_delete_works(model)
+        klass = model.class
+        deleted_klass = model.class.deleted_class
+
+        assert_raises(ActiveRecord::RecordNotFound) { deleted_klass.find model.id }
+        model.destroy
+
+        assert(deleted = deleted_klass.find(model.id))
+        assert_raises(ActiveRecord::RecordNotFound) { klass.find model.id }
+
+        deleted.undestroy!
+
+        assert_models_equal deleted, klass.find(model.id)
+        assert_raises(ActiveRecord::RecordNotFound) { deleted_klass.find model.id }
       end
 
       def assert_soft_delete_works
