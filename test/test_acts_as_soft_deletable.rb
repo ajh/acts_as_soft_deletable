@@ -1,6 +1,6 @@
 require File.join(File.dirname(__FILE__), 'test_helper')
 
-class BaseTest < SoftDeleteTestCase
+class TestActsAsSoftDeletable < SoftDeleteTestCase
   def test_destroy_should_create_a_deleted_model
     artist = Artist.find_by_name('Chick Corea')
     artist.destroy
@@ -46,7 +46,7 @@ class BaseTest < SoftDeleteTestCase
 
     def assert_models_equal(a, b, message = "models weren't equal")
       reject_attrs = %q(deleted_at, updated_at)
-      assert_equal \
+      assert_not_equal \
         a.attributes.reject{|k,v| reject_attrs.include? k}, 
         b.attributes.reject{|k,v| reject_attrs.include? k},
         message

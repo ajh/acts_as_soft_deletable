@@ -9,8 +9,13 @@ require 'active_record/fixtures'
 
 require 'acts_as_soft_deletable'
 
-# pulls from one of test/connections/#{adapter}/connection.rb depending on how rake setup our lib paths
-require 'connection' 
+begin
+  # pulls from one of test/connections/#{adapter}/connection.rb depending on how rake setup our lib paths
+  require 'connection' 
+rescue MissingSourceFile
+  # default in case our libs weren't setup
+  require File.join(File.dirname(__FILE__), 'connections', 'mysql', 'connection')
+end
 
 ActiveRecord::Base.logger = Logger.new File.join(File.dirname(__FILE__),"..","tmp","test.log")
 
