@@ -12,7 +12,8 @@ if ActiveRecord::Base.connection.supports_migrations?
 
       migrate_up(3)
 
-      assert_soft_delete_works
+      t = Thing.create! :title => 'blah blah', :price => 123.45, :type => 'Thing'
+      assert_model_soft_deletes(t)
 
       migrate_down
 
@@ -25,9 +26,8 @@ if ActiveRecord::Base.connection.supports_migrations?
 
       migrate_up(4)
 
-      #t = Thing.create! :title => 'blah blah', :price => 123.45, :type => 'Thing'
-      #new_assert_soft_delete_works(t)
-      assert_soft_delete_works
+      t = Thing.create! :title => 'blah blah', :price => 123.45, :type => 'Thing'
+      assert_model_soft_deletes(t)
 
       migrate_down
 
@@ -60,7 +60,7 @@ if ActiveRecord::Base.connection.supports_migrations?
       end
 
       # takes a saved model and runs assertions testing whether soft deleting is working
-      def new_assert_soft_delete_works(model)
+      def assert_model_soft_deletes(model)
         klass = model.class
         deleted_klass = model.class.deleted_class
 
@@ -72,23 +72,9 @@ if ActiveRecord::Base.connection.supports_migrations?
 
         deleted.undestroy!
 
-        assert_models_equal deleted, klass.find(model.id)
+        assert_soft_delete_models_are_equal deleted, klass.find(model.id)
         assert_raises(ActiveRecord::RecordNotFound) { deleted_klass.find model.id }
       end
 
-      def assert_soft_delete_works
-        t = Thing.create! :title => 'blah blah', :price => 123.45, :type => 'Thing'
-
-        assert_nil Thing::Deleted.find_by_title('blah blah')
-        t.destroy
-
-        assert(deleted = Thing::Deleted.find_by_title('blah blah'))
-        assert_nil Thing.find_by_title('blah blah')
-
-        deleted.undestroy!
-
-        assert_models_equal deleted, Thing.find_by_title('blah blah')
-        assert_nil Thing::Deleted.find_by_title('blah blah')
-      end
   end
 end

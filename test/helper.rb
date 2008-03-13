@@ -7,7 +7,7 @@ require 'active_support'
 require 'active_record'
 require 'active_record/fixtures'
 
-require 'acts_as_soft_deletable'
+require File.join(File.dirname(__FILE__), '..', 'init')
 
 begin
   # pulls from one of test/connections/#{adapter}/connection.rb depending on how rake setup our lib paths
@@ -44,13 +44,4 @@ class SoftDeleteTestCase < Test::Unit::TestCase #:nodoc:
     super
   end
 
-  private
-
-    def assert_models_equal(a, b, message = "models weren't equal")
-      reject_attrs = %q(deleted_at, updated_at)
-      assert_equal \
-        a.attributes.reject{|k,v| reject_attrs.include? k}, 
-        b.attributes.reject{|k,v| reject_attrs.include? k},
-        message
-    end
 end

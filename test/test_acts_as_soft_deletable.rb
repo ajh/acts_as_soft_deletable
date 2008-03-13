@@ -7,7 +7,7 @@ class TestActsAsSoftDeletable < SoftDeleteTestCase
     assert_nil Artist.find_by_name('Chick Corea')
 
     deleted = Artist::Deleted.find_by_name('Chick Corea')
-    assert_models_equal artist, deleted
+    assert_soft_delete_models_are_equal artist, deleted
   end
 
   def test_deleted_model_should_be_able_to_undestroy
@@ -16,7 +16,7 @@ class TestActsAsSoftDeletable < SoftDeleteTestCase
 
     deleted.undestroy!
 
-    assert_models_equal deleted, Artist.find_by_name('Robert Walter')
+    assert_soft_delete_models_are_equal deleted, Artist.find_by_name('Robert Walter')
     assert_nil Artist::Deleted.find_by_name('Robert Walter')
     assert deleted.frozen?
   end
@@ -39,6 +39,10 @@ class TestActsAsSoftDeletable < SoftDeleteTestCase
     end
 
     restored = Decimal.find :first
-    assert_models_equal decimal, restored
+    assert_soft_delete_models_are_equal decimal, restored
+  end
+
+  def test_helper_should_work
+    assert_model_soft_deletes Artist.find_by_name('Chick Corea')
   end
 end

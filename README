@@ -37,6 +37,8 @@ This turns out to be easy to solve. A migration helper is available (see below) 
 
 === Setup ===
 
+---+ Model
+
 Any ActiveRecord class that wants the soft delete functionality should add
 the following line to their class definition:
 
@@ -45,6 +47,8 @@ class SomeModel < ActiveRecord::Base
   acts_as_soft_deletable
   ...
 </pre>
+
+---+ Migration
 
 and setup the deleted table with the following migration:
 
@@ -58,6 +62,33 @@ class AddActsAsSoftDeletable < ActiveRecord::Migration
     SomeModel::Deleted.drop_table
   end
 end
+</pre>
+
+Any changes to the original table (such as adding a column) should be reflected in the deleted table. Use the update_columns method:
+
+<pre>
+class AddSkuColumn < ActiveRecord::Migration
+  def self.up
+    add_column 'items', 'sku', :string
+    Item::Deleted.update_columns # will add sku column
+  end
+
+  def self.down
+    remove_column 'items', 'sku'
+    Item::Deleted.update_columns # will remove sku column
+  end
+end
+</pre>
+
+---+ Unit tests
+
+A model's soft delete capabilities can be unit tests easily by using some provide asserts.
+
+<pre>
+  def test_soft_delete_works
+    # will run the model through a destroy and undestroy while making sure all values were saved
+    assert_model_soft_deletes( items(:radar_detector) )
+  end
 </pre>
 
 === TODO ===

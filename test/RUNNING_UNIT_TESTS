@@ -1,11 +1,13 @@
 == Creating the test database(s)
 
 The tests can run against several databases. See the related test/connections/#{adapter}/connection.rb file
-for information about expected connection settings.
+for information about expected connection settings. 
+
+The sqlite tests are especially easy to run once the required gems are installed.
 
 == Other Prerequisites
 
-Mocha must be installed.
+The mocha gem must be installed.
 
 == Running with Rake
 
