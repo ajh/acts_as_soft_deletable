@@ -7,7 +7,7 @@ namespace :test do
     desc "Test the plugin with #{adapter}"
     Rake::TestTask.new(adapter) do |t|
       t.libs << "test/connections/#{adapter}"
-      t.pattern = 'test/**/*_test.rb'
+      t.pattern = 'test/**/test_*.rb'
       t.verbose = true
     end
 

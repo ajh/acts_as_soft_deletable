@@ -1,6 +1,6 @@
-require File.join(File.dirname(__FILE__), 'test_helper')
+require File.join(File.dirname(__FILE__), 'helper')
 
-class TransactionTest < SoftDeleteTestCase
+class TestTransaction < SoftDeleteTestCase
   def test_shouldnt_archive_if_destroy_fails
     artist = Artist.find_by_name('Chick Corea')
     artist.expects(:destroy_without_soft_delete).raises("some error")
