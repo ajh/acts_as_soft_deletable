@@ -104,6 +104,7 @@ module ActiveRecord #:nodoc:
         module InstanceMethods
           def self.included(base)
             base.class_eval do
+              # don't use before_destroy callback because that can't be transactional.
               alias_method_chain :destroy, :soft_delete
             end
           end
