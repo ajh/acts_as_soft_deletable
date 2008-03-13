@@ -1,4 +1,5 @@
 ActiveRecord::Schema.define(:version => 1) do
+
   create_table :artists, :force => true do |t|
     t.string :name
     t.date   :birthday
@@ -14,4 +15,5 @@ ActiveRecord::Schema.define(:version => 1) do
     t.timestamps
   end
   Decimal::Deleted.create_table(:force => true)
+
 end

@@ -41,14 +41,4 @@ class TestActsAsSoftDeletable < SoftDeleteTestCase
     restored = Decimal.find :first
     assert_models_equal decimal, restored
   end
-
-  private
-
-    def assert_models_equal(a, b, message = "models weren't equal")
-      reject_attrs = %q(deleted_at, updated_at)
-      assert_equal \
-        a.attributes.reject{|k,v| reject_attrs.include? k}, 
-        b.attributes.reject{|k,v| reject_attrs.include? k},
-        message
-    end
 end

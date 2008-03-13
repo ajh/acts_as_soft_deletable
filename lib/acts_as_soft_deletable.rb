@@ -28,18 +28,51 @@ module ActiveRecord #:nodoc:
       module Deleted
 
         module ClassMethods
+          # Creates a deleted table by introspecting on the original table
           def create_table(create_table_options = {})
             connection.create_table(table_name, create_table_options) do |t|
-              model_class.columns.select{|c| c.name != model_class.primary_key}.each do |col|
+              model_class.columns.select{|col| col.name != model_class.primary_key}.each do |col|
                 t.column col.name, col.type, :scale => col.scale, :precision => col.precision
               end
               t.datetime :deleted_at
             end
           end
 
-          # TODO: not tested yet
+          # Drops the deleted table
           def drop_table(drop_table_options = {})
             connection.drop_table(table_name, drop_table_options)
+          end
+
+          # Updates the deleted table by adding or removing rows to match the original table.
+          # This is useful to call after adding or deleting columns in the original table.
+          def update_columns
+            original_specs = returning({}) do |h|
+              model_class.columns.each do |col|
+                h[col.name] = { :type => col.type, :scale => col.scale, :precision => col.precision }
+              end
+            end
+
+            deleted_specs = returning({}) do |h|
+              self.columns.each do |col|
+                h[col.name] = { :type => col.type, :scale => col.scale, :precision => col.precision }
+              end
+            end
+            deleted_specs.reject!{|k,v| k == "deleted_at"}
+
+            (original_specs.keys - deleted_specs.keys).each do |name|
+              connection.add_column \
+                table_name, 
+                name, 
+                original_specs[name][:type], 
+                original_specs[name].reject{|k,v| k == :type}
+            end
+
+            (deleted_specs.keys - original_specs.keys).each do |name|
+              connection.remove_column table_name, name
+            end
+
+            self.reset_column_information
+            model_class.reset_column_information
           end
         end
 

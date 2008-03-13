@@ -26,7 +26,16 @@ restored = Artist.find(34) # The artist is restored with all the same
 
 </pre>
 
-== Setup ==
+=== Compare to acts_as_paranoid ===
+
+Acts_as_paranoid takes the approach of using a deleted_at flag in the models table. This has the drawback that finds on the model have to exclude deleted rows. This behaviour change turns out be be a challenge. Acts_as_paranoid tries to patch the ActiveRecord internals to accomplish this, but ActiveRecord could change in the future causing acts_as_parnoid to break. Also, there are some exotic finds that need to be considered like "has_many through with polymorphism". This doesn't exclude deleted models as it should in acts_as_paranoid (March 2008).
+
+This plugin avoids the problem of changing find's behavior by allowing the row to really be 
+deleted and archiving it into another table. The advantages are that its hook into ActiveRecord is really simple and has low risk of breaking in the future. The cost is that there are a bunch of deleted tables in the database that need to be maintained. For example, if the table adds a column in a future migration, then the deleted table needs that column as well.
+
+This turns out to be easy to solve. A migration helper is available (see below) that will help keep the deleted table in sync. Also, a unit test helper is provided (again, see below) which adds unit tests to the model ensuring soft delete is working. If this is used, the test will fail if the deleted table gets out of sync.
+
+=== Setup ===
 
 Any ActiveRecord class that wants the soft delete functionality should add
 the following line to their class definition:
@@ -51,17 +60,6 @@ class AddActsAsSoftDeletable < ActiveRecord::Migration
 end
 </pre>
 
-== Compare to acts_as_paranoid ==
+=== TODO ===
 
-It may seem a little untidy to have a deleted table for each table with soft delete support. 
-
-Acts_as_paranoid takes a different approach and uses a deleted_at flag in the models
-table. This approach has the drawback that the behavior of find on the model has to change to 
-exclude deleted rows by default. This turns out be be a challenge as it needs to monkey patch 
-the ActiveRecord internals which can break as ActiveRecord evolves. Also, there are some exotic 
-finds that need to be considered, like "has_many through with polymorphism". This doesn't work in 
-acts_as_paranoid for example (March 2008).
-
-This plugin avoids the problem of changing find's behavior by allowing the row to really be 
-deleted and archiving it into another table. The cost is that there are a bunch of deleted_* 
-tables in the database.
+make undestroying easier when there are lots of related rows to undestroy.
