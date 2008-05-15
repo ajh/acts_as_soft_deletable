@@ -1,4 +1,4 @@
-Copyright (C) 2008 Substantial Consulting and Andrew Hartford <hartforda@gmail.com>
+Copyright (C) 2008 Substantial Consulting and Andy Hartford <hartforda @ gmail.com>
 
 === acts_as_soft_deletable ===
 
@@ -9,9 +9,8 @@ They can later be restored easily.
 <pre>
 
 class Artist < ActiveRecord::Base
-  # This will wrap the destroy method to provide soft delete 
-  # support and create a new ActiveRecord class called Artist::Deleted
-  acts_as_soft_deletable
+  acts_as_soft_deletable # This will wrap the destroy method to provide soft delete 
+                         # support and create a new ActiveRecord class called Artist::Deleted
 end
 
 model = Artist.find(34)
@@ -30,12 +29,11 @@ restored = Artist.find(34) # The artist is restored with all the same
 
 === Compare to acts_as_paranoid ===
 
-Acts_as_paranoid takes the approach of using a deleted_at flag in the models table. This has the drawback that finds on the model have to exclude deleted rows. This behaviour change turns out be be a challenge. Acts_as_paranoid tries to patch the ActiveRecord internals to accomplish this, but ActiveRecord could change in the future causing acts_as_parnoid to break. Also, there are some exotic finds that need to be considered like "has_many through with polymorphism". This doesn't exclude deleted models as it should in acts_as_paranoid (March 2008).
+Acts_as_paranoid takes the approach of using a deleted_at flag in the models table. If the deleted_at column has a value, the row is considered 'deleted'. The problem with this approach is that all finds on the model have to exclude 'deleted' rows. This turns out be be a challenge. Acts_as_paranoid patches the ActiveRecord internals to accomplish this, but it is fragile and could break with future changes to ActiveRecord. Also, some of the more exotic finds currently don't work (has_many :through with polymorphism as of March 2008) and supporting them means running on an upgrade treadmill to keep up with the evolution of ActiveRecord.
 
-This plugin avoids the problem of changing find's behavior by allowing the row to really be 
-deleted and archiving it into another table. The advantages are that its hook into ActiveRecord is really simple and has low risk of breaking in the future. The cost is that there are a bunch of deleted tables in the database that need to be maintained. For example, if the table adds a column in a future migration, then the deleted table needs that column as well.
+This plugin avoids these problems by allowing the row to be deleted and archiving it into another table. The behavior of ActiveRecord::Base#Find doesn't have to change which should mean that this plugin is more immune to breaking due to ActiveRecord development. The tradeoff is that the deleted table needs to be maintained along with the source table. For example, if the artists table adds a column in a future migration, then the deleted_artists table needs that column as well.
 
-This turns out to be easy to solve. A migration helper is available (see below) that will help keep the deleted table in sync. Also, a unit test helper is provided (again, see below) which adds unit tests to the model ensuring soft delete is working. If this is used, the test will fail if the deleted table gets out of sync.
+A migration helper is available (see below) that will help keep the deleted table in sync. Also, a unit test helper is provided (again, see below) which adds unit tests to the model ensuring soft delete is working. If this is used, the test will fail if the deleted table gets out of sync.
 
 === Setup ===
 
@@ -82,9 +80,11 @@ class AddSkuColumn < ActiveRecord::Migration
 end
 </pre>
 
+Note that update_columns will happily delete columns if asked which will lose data forever. I'm not sure if this behavior is fine or horrifying, but it's definitely something to keep in mind. I'd appreciate feedback on this.
+
 ---+ Unit tests
 
-A model's soft delete capabilities can be unit tests easily by using some provide asserts.
+A model's soft delete capabilities can be easily unit tested by using this provided assert:
 
 <pre>
   def test_soft_delete_works
@@ -93,6 +93,14 @@ A model's soft delete capabilities can be unit tests easily by using some provid
   end
 </pre>
 
+This was developed with Test::Unit in mind. Not sure how well it works with rspec.
+
+=== Thanks ===
+
+Substantial Consulting, my employer for letting me release this,
+acts_as_paranoid and technoweenie, for a plugin I've got good years of use out of,
+and acts_as_versioned, who's approach influenced this plugin.
+ 
 === TODO ===
 
 make undestroying easier when there are lots of related rows to undestroy.
