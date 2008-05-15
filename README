@@ -1,4 +1,4 @@
-Copyright (C) 2008 Substantial Consulting and Andy Hartford <hartforda @ gmail.com>
+Copyright (C) 2008 Substantial and Andy Hartford <hartforda @ gmail.com>
 
 === acts_as_soft_deletable ===
 
@@ -97,7 +97,7 @@ This was developed with Test::Unit in mind. Not sure how well it works with rspe
 
 === Thanks ===
 
-Substantial Consulting, my employer for letting me release this,
+Substantial, my employer for letting me release this,
 acts_as_paranoid and technoweenie, for a plugin I've got good years of use out of,
 and acts_as_versioned, who's approach influenced this plugin.
  
