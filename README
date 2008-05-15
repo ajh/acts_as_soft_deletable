@@ -1,3 +1,5 @@
+Copyright (C) 2008 Substantial Consulting and Andrew Hartford <hartforda@gmail.com>
+
 === acts_as_soft_deletable ===
 
 This plugin provides the ability to soft delete ActiveRecord models. When 
