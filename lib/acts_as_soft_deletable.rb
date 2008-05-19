@@ -6,18 +6,18 @@ module ActiveRecord #:nodoc:
       module ClassMethods
         def acts_as_soft_deletable
           # don't allow multiple calls
-          return if self.included_modules.include?(Model::InstanceMethods)
+          return if self.included_modules.include?(Live::InstanceMethods)
 
-          include Model::InstanceMethods
-          extend Model::ClassMethods
+          include Live::InstanceMethods
+          extend Live::ClassMethods
           
-          model_class = self
+          live_class = self
           @deleted_class = const_set("Deleted", Class.new(ActiveRecord::Base)).class_eval do
-            # class of undeleted model
-            cattr_accessor :model_class 
+            # class of live (undeleted) model
+            cattr_accessor :live_class 
 
-            self.model_class = model_class
-            self.set_table_name "deleted_#{model_class.table_name}"
+            self.live_class = live_class
+            self.set_table_name "deleted_#{live_class.table_name}"
 
             extend Deleted::ClassMethods
             include Deleted::InstanceMethods
@@ -28,10 +28,10 @@ module ActiveRecord #:nodoc:
       module Deleted
 
         module ClassMethods
-          # Creates a deleted table by introspecting on the original table
+          # Creates a deleted table by introspecting on the live table
           def create_table(create_table_options = {})
             connection.create_table(table_name, create_table_options) do |t|
-              model_class.columns.select{|col| col.name != model_class.primary_key}.each do |col|
+              live_class.columns.select{|col| col.name != live_class.primary_key}.each do |col|
                 t.column col.name, col.type, :scale => col.scale, :precision => col.precision
               end
               t.datetime :deleted_at
@@ -43,11 +43,11 @@ module ActiveRecord #:nodoc:
             connection.drop_table(table_name, drop_table_options)
           end
 
-          # Updates the deleted table by adding or removing rows to match the original table.
-          # This is useful to call after adding or deleting columns in the original table.
+          # Updates the deleted table by adding or removing rows to match the live table.
+          # This is useful to call after adding or deleting columns in the live table.
           def update_columns
-            original_specs = returning({}) do |h|
-              model_class.columns.each do |col|
+            live_specs = returning({}) do |h|
+              live_class.columns.each do |col|
                 h[col.name] = { :type => col.type, :scale => col.scale, :precision => col.precision }
               end
             end
@@ -59,28 +59,28 @@ module ActiveRecord #:nodoc:
             end
             deleted_specs.reject!{|k,v| k == "deleted_at"}
 
-            (original_specs.keys - deleted_specs.keys).each do |name|
+            (live_specs.keys - deleted_specs.keys).each do |name|
               connection.add_column \
                 table_name, 
                 name, 
-                original_specs[name][:type], 
-                original_specs[name].reject{|k,v| k == :type}
+                live_specs[name][:type], 
+                live_specs[name].reject{|k,v| k == :type}
             end
 
-            (deleted_specs.keys - original_specs.keys).each do |name|
+            (deleted_specs.keys - live_specs.keys).each do |name|
               connection.remove_column table_name, name
             end
 
             self.reset_column_information
-            model_class.reset_column_information
+            live_class.reset_column_information
           end
         end
 
         module InstanceMethods
-          # restore the model from deleted status. Will destroy the deleted record and recreate the original record
+          # restore the model from deleted status. Will destroy the deleted record and recreate the live record
           def undestroy!
             self.class.transaction do
-              model = self.class.model_class.new
+              model = self.class.live_class.new
               self.attributes.reject{|k,v| k == 'deleted_at'}.keys.each do |key|
                 model.send("#{key}=", self.send(key))
               end
@@ -92,7 +92,7 @@ module ActiveRecord #:nodoc:
         end
       end
 
-      module Model
+      module Live
 
         module ClassMethods
           # returns instance of deleted class

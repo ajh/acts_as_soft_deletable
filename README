@@ -31,7 +31,7 @@ restored = Artist.find(34) # The artist is restored with all the same
 
 Acts_as_paranoid takes the approach of using a deleted_at flag in the models table. If the deleted_at column has a value, the row is considered 'deleted'. The problem with this approach is that all finds on the model have to exclude 'deleted' rows. This turns out be be a challenge. Acts_as_paranoid patches the ActiveRecord internals to accomplish this, but it is fragile and could break with future changes to ActiveRecord. Also, some of the more exotic finds currently don't work (has_many :through with polymorphism as of March 2008) and supporting them means running on an upgrade treadmill to keep up with the evolution of ActiveRecord.
 
-This plugin avoids these problems by allowing the row to be deleted and archiving it into another table. The behavior of ActiveRecord::Base#Find doesn't have to change which should mean that this plugin is more immune to breaking due to ActiveRecord development. The tradeoff is that the deleted table needs to be maintained along with the source table. For example, if the artists table adds a column in a future migration, then the deleted_artists table needs that column as well.
+This plugin avoids these problems by allowing the row to be deleted and archiving it into another table. The behavior of ActiveRecord::Base#Find doesn't have to change which should mean that this plugin is more immune to breaking due to ActiveRecord development. Queries on the live table will also be faster in the case of lots of deleted rows, because they will be in a seperate table. The tradeoff is that the deleted table needs to be maintained along with the live table. For example, if the artists table adds a column in a future migration, then the deleted_artists table needs that column as well.
 
 A migration helper is available (see below) that will help keep the deleted table in sync. Also, a unit test helper is provided (again, see below) which adds unit tests to the model ensuring soft delete is working. If this is used, the test will fail if the deleted table gets out of sync.
 
@@ -97,10 +97,7 @@ This was developed with Test::Unit in mind. Not sure how well it works with rspe
 
 === Thanks ===
 
-Substantial, my employer for letting me release this,
-acts_as_paranoid and technoweenie, for a plugin I've got good years of use out of,
-and acts_as_versioned, who's approach influenced this plugin.
- 
-=== TODO ===
-
-make undestroying easier when there are lots of related rows to undestroy.
+Substantial, my employer for letting me release this
+acts_as_paranoid and technoweenie, for a plugin I've got good years of use out of
+acts_as_versioned, who's approach influenced this plugin
+Danimal, for the feedback on rubyonrails-talk
