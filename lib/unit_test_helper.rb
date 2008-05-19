@@ -1,8 +1,9 @@
-module Test
-  module Unit
+module Test #:nodoc:
+  module Unit #:nodoc:
+    # This module is included into Test::Unit::TestCase and in that way is available in your test cases.
     module ActsAsDeleted
-      # Takes a saved model and runs assertions testing whether soft deleting is working
-      def assert_model_soft_deletes(model)
+      # Takes a saved model and runs assertions testing whether soft deleting is working.
+      def assert_model_soft_deletes(model) # TODO: should accept a message argument
         klass = model.class
         deleted_klass = model.class.deleted_class
 
@@ -19,7 +20,7 @@ module Test
       end
    
       # Asserts whether a two soft deleting models are equal. Intended to be passed
-      # an instance of a model and an instance of the deleted class's model. Checks that
+      # an instance of a model and an instance of the deleted class's model (in any order). Checks that
       # all attributes were saved off correctly.
       def assert_soft_delete_models_are_equal(a, b, message = "models weren't equal")
         reject_attrs = %q(deleted_at, updated_at)
