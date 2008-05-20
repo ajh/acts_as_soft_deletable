@@ -25,11 +25,31 @@ They can later be restored easily.
 
 == Compare to acts_as_paranoid
 
-Acts_as_paranoid takes the approach of using a deleted_at flag in the models table. If the deleted_at column has a value, the row is considered 'deleted'. The problem with this approach is that all finds on the model have to exclude 'deleted' rows. This turns out be be a challenge. Acts_as_paranoid patches the ActiveRecord internals to accomplish this, but it is fragile and could break with future changes to ActiveRecord. Also, some of the more exotic finds currently don't work (has_many :through with polymorphism as of March 2008) and supporting them means running on an upgrade treadmill to keep up with the evolution of ActiveRecord.
+Acts_as_paranoid takes the approach of using a deleted_at flag in the models
+table. If the deleted_at column has a value, the row is considered 'deleted'.
+The problem with this approach is that all finds on the model have to exclude
+'deleted' rows. This turns out be be a challenge. Acts_as_paranoid patches the
+ActiveRecord internals to accomplish this, but it is fragile and could break
+with future changes to ActiveRecord. Also, some of the more exotic finds
+currently don't work (has_many :through with polymorphism as of March 2008) and
+supporting them means running on an upgrade treadmill to keep up with the
+evolution of ActiveRecord.
 
-This plugin avoids these problems by allowing the row to be deleted and archiving it into another table. The behavior of ActiveRecord::Base#Find doesn't have to change which should mean that this plugin is more immune to breaking due to ActiveRecord development. Queries on the live table will also be faster in the case of lots of deleted rows, because they will be in a seperate table. The tradeoff is that the deleted table needs to be maintained along with the live table. For example, if the artists table adds a column in a future migration, then the deleted_artists table needs that column as well.
+This plugin avoids these problems by allowing the row to be deleted and
+archiving it into another table. The behavior of ActiveRecord::Base#Find
+doesn't have to change which should mean that this plugin is more immune to
+breaking due to ActiveRecord development. Queries on the live table will also
+be faster in the case of lots of deleted rows, because they will be in a
+separate table. 
 
-A migration helper is available (see below) that will help keep the deleted table in sync. Also, a unit test helper is provided (again, see below) which adds unit tests to the model ensuring soft delete is working. If this is used, the test will fail if the deleted table gets out of sync.
+The tradeoff is that the deleted table needs to be maintained along with the
+live table. For example, if the artists table adds a column in a future
+migration, then the deleted_artists table needs that column as well.
+
+A migration helper is available (see below) that will help keep the deleted
+table in sync. Also, a unit test helper is provided (again, see below) which
+adds unit tests to the model ensuring soft delete is working. If this is used,
+the test will fail if the deleted table gets out of sync.
 
 == Setup
 
@@ -56,7 +76,8 @@ and setup the deleted table with the following migration:
       end
     end
 
-Any changes to the original table (such as adding a column) should be reflected in the deleted table. Use the update_columns method:
+Any changes to the original table (such as adding a column) should be reflected
+in the deleted table. Use the update_columns method:
 
     class AddSkuColumn < ActiveRecord::Migration
       def self.up
@@ -70,7 +91,10 @@ Any changes to the original table (such as adding a column) should be reflected 
       end
     end
 
-Note that update_columns will happily delete columns if asked which will lose data forever. I'm not sure if this behavior is fine or horrifying, but it's definitely something to keep in mind. I'd appreciate feedback on this.
+Note that update_columns will happily delete columns if asked. In this case a
+warning will be issued when the migration is run alerting the developer to the
+situation. This warning can be disabled, see:
+ActiveRecord::Acts::SoftDeletable#remove_column_warning_enabled=
 
 === Unit tests
 

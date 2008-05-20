@@ -1,14 +1,26 @@
 module ActiveRecord #:nodoc:
   module Acts #:nodoc:
-    module SoftDeletable #:nodoc:
+    # See the README file for general usage, or ClassMethods#acts_as_soft_deletable for more info.
+    module SoftDeletable
+      @remove_column_warning_enabled = true
+
+      # Returns whether the remove column warning is enabled
+      def self.remove_column_warning_enabled?; @remove_column_warning_enabled end
+      
+      # Sets whether the remove column warning is enabled
+      def self.remove_column_warning_enabled=(boolean); @remove_column_warning_enabled = (boolean ? true : false) end
+
       module ClassMethods
-        # Specify this act if you wish to archive deleted rows in a special deleted table so that 
-        # they can be later restored. 
+        # Specify this act if you wish to archive deleted rows in a special
+        # deleted table so that they can be later restored. 
         #
-        # This includes and extends Live::InstanceMethods and Live::ClassMethods into this class. 
+        # This includes and extends Live::InstanceMethods and
+        # Live::ClassMethods into this class. 
         #
-        # It will also create a new ActiveRecord::Base class named after this class with the suffix <tt>::Deleted</tt> added.
-        # The new class is used for dealing with rows that have been deleted. See the README for more info and examples.
+        # It will also create a new ActiveRecord::Base class named after this
+        # class with the suffix <tt>::Deleted</tt> added.  The new class is
+        # used for dealing with rows that have been deleted. See the README for
+        # more info and examples.
         def acts_as_soft_deletable
           # don't allow multiple calls
           return if self.included_modules.include?(Live::InstanceMethods)
@@ -32,9 +44,11 @@ module ActiveRecord #:nodoc:
 
       module Deleted #:nodoc:
 
-        # These methods will be available as class methods on the deleted class.
+        # These methods will be available as class methods on the deleted
+        # class.
         module ClassMethods
-          # Creates a deleted table by introspecting on the live table. Useful in a migration #up method.
+          # Creates a deleted table by introspecting on the live table. Useful
+          # in a migration #up method.
           def create_table(create_table_options = {})
             connection.create_table(table_name, create_table_options) do |t|
               live_class.columns.select{|col| col.name != live_class.primary_key}.each do |col|
@@ -49,8 +63,15 @@ module ActiveRecord #:nodoc:
             connection.drop_table(table_name, drop_table_options)
           end
 
-          # Updates the deleted table by adding or removing rows to match the live table.
-          # This is useful to call after adding or deleting columns in the live table.
+          # Updates the deleted table by adding or removing rows to match the
+          # live table.  This is useful to call after adding or deleting
+          # columns in the live table.
+          #
+          # A warning will be printed if a column is being removed just to make
+          # sure the behavior is expected.  The warning can be turned off by
+          # setting
+          # ActiveRecord::Acts::SoftDeletable#remove_column_warning_enabled= to
+          # false.
           def update_columns
             live_specs = returning({}) do |h|
               live_class.columns.each do |col|
@@ -74,6 +95,9 @@ module ActiveRecord #:nodoc:
             end
 
             (deleted_specs.keys - live_specs.keys).each do |name|
+              if ActiveRecord::Acts::SoftDeletable.remove_column_warning_enabled?
+                warn "Acts_as_soft_deletable is removing column #{table_name}.#{name}. You can disable this warning by setting blah = false in your migration."
+              end
               connection.remove_column table_name, name
             end
 
@@ -82,9 +106,12 @@ module ActiveRecord #:nodoc:
           end
         end
 
-        # These methods will be available as instance methods on the deleted class.
+        # These methods will be available as instance methods on the deleted
+        # class.
         module InstanceMethods
-          # Restore the model from deleted status. Will destroy the deleted record and recreate the live record. This is done in a transaction and will rollback if problems occur.
+          # Restore the model from deleted status. Will destroy the deleted
+          # record and recreate the live record. This is done in a transaction
+          # and will rollback if problems occur.
           def undestroy!
             self.class.transaction do
               model = self.class.live_class.new
@@ -101,7 +128,8 @@ module ActiveRecord #:nodoc:
 
       module Live #:nodoc:
 
-        # These methods will be available as class methods for the Model class that invoked acts_as_soft_deletable
+        # These methods will be available as class methods for the Model class
+        # that invoked acts_as_soft_deletable
         module ClassMethods
           # Returns Class object of deleted class
           def deleted_class
@@ -109,7 +137,8 @@ module ActiveRecord #:nodoc:
           end
         end
 
-        # These methods will be available as instance methods for the Model class that invoked acts_as_soft_deletable
+        # These methods will be available as instance methods for the Model
+        # class that invoked acts_as_soft_deletable
         module InstanceMethods
           def self.included(base)
             base.class_eval do
@@ -118,9 +147,10 @@ module ActiveRecord #:nodoc:
             end
           end
 
-          # Wraps ActiveRecord::Base#destroy to provide the soft deleting behavoir. 
-          # The insert into the deleted table is protected with a transaciton and
-          # will be rolled back if destroy raises any exception.
+          # Wraps ActiveRecord::Base#destroy to provide the soft deleting
+          # behavior.  The insert into the deleted table is protected with a
+          # transaction and will be rolled back if destroy raises any
+          # exception.
           def destroy_with_soft_delete
             self.class.transaction do
               deleted = self.class.deleted_class.new
