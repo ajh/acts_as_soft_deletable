@@ -135,6 +135,51 @@ module ActiveRecord #:nodoc:
           def deleted_class
             @deleted_class
           end
+
+          # Same as ActiveRecord::Base#find except that it will also return
+          # deleted records as well as live ones.
+          #
+          # Some of find's options are not supported and will raise an
+          # exception. These include: order, limit, and offset.
+          def find_with_deleted(*args)
+            if args.last.is_a?(Hash) 
+              [:order, :limit, :offset].each do |option|
+                raise ArgumentError.new "#{option} option is not supported" if args.last.key?(option)
+              end
+            end
+
+            case args.first
+            when :all
+              find(*args) + deleted_class.find(*args)
+            when :first
+              find(*args) || deleted_class.find(*args)
+            else
+              (live_results = find(*args)) rescue ActiveRecord::RecordNotFound
+              (deleted_results = deleted_class.find(*args)) rescue ActiveRecord::RecordNotFound
+
+              live_results && deleted_results ? \
+                live_results + deleted_results : 
+                live_results || deleted_results
+            end
+          end
+
+          # Enables dynamic finders like
+          # find_with_deleted_by_user_name(user_name) and
+          # find_all_with_deleted_by_user_name_and_password(user_name,
+          # password) 
+          def method_missing(method_id, *arguments)
+            if /^find_(all_with_deleted_by|with_deleted_by)_([_a-zA-Z]\w*)$/.match(method_id.to_s)
+              m = method_id.to_s.sub(%r/with_deleted_/, '')
+              live_results = send(m, *arguments)
+              deleted_results = deleted_class.send(m, *arguments)
+
+              live_results && deleted_results ? \
+                live_results + deleted_results : 
+                live_results || deleted_results
+            else
+              super
+            end
+          end
         end
 
         # These methods will be available as instance methods for the Model

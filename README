@@ -15,7 +15,12 @@ They can later be restored easily.
     model.destroy   # removes row from artists table, and adds a row to 
                     # deleted_artists table
 
-    deleted = Artist::Deleted.find(34)
+   
+    # The deleted record can be retrieved several ways
+    deleted = Artist::Deleted.find(34)            # using the deleted class
+    deleted = Artist.find_with_deleted(34)        # using the live class
+    deleted = Artist.find_with_deleted_by_id(34)  # dynamic finds work too
+
     deleted.undestroy!  # adds the row back to the artists table, and removes 
                         # if from the deleted_artists table
 
