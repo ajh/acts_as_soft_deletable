@@ -96,7 +96,7 @@ module ActiveRecord #:nodoc:
 
             (deleted_specs.keys - live_specs.keys).each do |name|
               if ActiveRecord::Acts::SoftDeletable.remove_column_warning_enabled?
-                warn "Acts_as_soft_deletable is removing column #{table_name}.#{name}. You can disable this warning by setting blah = false in your migration."
+                warn "Acts_as_soft_deletable is removing column #{table_name}.#{name}. You can disable this warning by setting 'ActiveRecord::Acts::SoftDeletable.remove_column_warning_enabled = false' in your migration."
               end
               connection.remove_column table_name, name
             end
