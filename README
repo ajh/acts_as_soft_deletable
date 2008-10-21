@@ -47,7 +47,12 @@ breaking due to ActiveRecord development. Queries on the live table will also
 be faster in the case of lots of deleted rows, because they will be in a
 separate table. 
 
-The tradeoff is that the deleted table needs to be maintained along with the
+The biggest tradeoff is that deleted rows aren't visible through active record
+associations because they're in a different table. The only solution I could
+think of was to write proxies for the associations. But it would involve so
+much code that I figured it wasn't worth it.
+
+Another tradeoff is that the deleted table needs to be maintained along with the
 live table. For example, if the artists table adds a column in a future
 migration, then the deleted_artists table needs that column as well.
 
