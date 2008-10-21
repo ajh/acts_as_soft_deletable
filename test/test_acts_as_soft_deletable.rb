@@ -22,8 +22,7 @@ class TestActsAsSoftDeletable < SoftDeleteTestCase
   end
 
   def test_should_copy_decimals_correctly
-    assert_equal [1, 0], [Decimal.count, Decimal::Deleted.count]
-    decimal = Decimal.find :first
+    decimal = Decimal.find 1
 
     assert_difference("Decimal.count", -1) do
       assert_difference("Decimal::Deleted.count") do
@@ -44,5 +43,12 @@ class TestActsAsSoftDeletable < SoftDeleteTestCase
 
   def test_helper_should_work
     assert_model_soft_deletes Artist.find_by_name('Chick Corea')
+  end
+
+  def test_should_replace_any_existing_deleted_entry
+    assert (d = Decimal.find(38383))
+    assert Decimal::Deleted.find(38383)
+
+    assert_nothing_raised { d.destroy }
   end
 end

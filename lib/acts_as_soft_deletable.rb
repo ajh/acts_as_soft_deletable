@@ -144,7 +144,7 @@ module ActiveRecord #:nodoc:
           def find_with_deleted(*args)
             if args.last.is_a?(Hash) 
               [:order, :limit, :offset].each do |option|
-                raise ArgumentError.new "#{option} option is not supported" if args.last.key?(option)
+                raise ArgumentError.new("#{option} option is not supported") if args.last.key?(option)
               end
             end
 
@@ -198,6 +198,8 @@ module ActiveRecord #:nodoc:
           # exception.
           def destroy_with_soft_delete
             self.class.transaction do
+              self.class.deleted_class.delete self.id
+
               deleted = self.class.deleted_class.new
               self.attributes.keys.each do |key|
                 deleted.send("#{key}=", self.send(key))
