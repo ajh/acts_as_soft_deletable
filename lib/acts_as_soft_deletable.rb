@@ -204,6 +204,10 @@ module ActiveRecord #:nodoc:
               self.attributes.keys.each do |key|
                 deleted.send("#{key}=", self.send(key))
               end
+              # If you set Time.zone then deleted_at will be stored in UTC. See
+              # http://api.rubyonrails.org/classes/ActiveSupport/CoreExtensions/Time/Zones/ClassMethods.html#M001101
+              deleted.deleted_at = Time.now
+
               deleted.save!
               destroy_without_soft_delete
             end
