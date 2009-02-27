@@ -28,6 +28,13 @@ They can later be restored easily.
                                # information. The updated_at column will be 
                                # Time.now if it exists.
 
+== Use with Rails 2.3+
+
+Before using this with a new Rails 2.3 app, you may want to consider using the
+new default_scope feature (or named_scopes) with a deleted_at flag. See
+http://ryandaigle.com/articles/2008/11/18/what-s-new-in-edge-rails-default-scoping
+for a discussion about this.
+
 == Compare to acts_as_paranoid
 
 Acts_as_paranoid takes the approach of using a deleted_at flag in the models
