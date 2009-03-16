@@ -1,3 +1,5 @@
+require 'test/unit'
+
 module Test #:nodoc:
   module Unit #:nodoc:
     # This module is included into Test::Unit::TestCase and in that way is available in your test cases.
