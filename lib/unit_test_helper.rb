@@ -35,4 +35,4 @@ module Test #:nodoc:
   end
 end
 
-Test::Unit::TestCase.send(:include, Test::Unit::ActsAsDeleted)
+ActionController::TestCase.send(:include, Test::Unit::ActsAsDeleted)
