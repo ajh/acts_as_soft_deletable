@@ -122,6 +122,11 @@ A model's soft delete capabilities can be easily unit tested by using this provi
       assert_model_soft_deletes( items(:radar_detector) )
     end
 
+Note : You may need to put the following in your test_helper.rb file if you see an error like 'NoMethodError: undefined method 'assert_model_soft_deletes'' when running your unit tests:
+
+    require 'test/unit'
+    include Test::Unit::ActsAsDeleted
+
 This was developed with Test::Unit in mind. Not sure how well it works with rspec.
 
 === Thanks
